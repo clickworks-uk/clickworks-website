@@ -168,4 +168,5 @@ export const SERVICE_SLIDES: ServiceSlide[] = [
   { label: "Search Engine Optimisation", image: "/services/seo.png" },
   { label: "Consultation", image: "/services/consultation.png" },
   { label: "Graphic Design", image: "/services/tag.png" },
+  { label: "Software Development", image: "/services/software-development.png" },
 ];

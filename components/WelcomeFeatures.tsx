@@ -12,18 +12,18 @@ import { Wordmark } from "@/components/Wordmark";
  */
 const FEATURES = [
   {
-    title: "Evidence, not guesswork",
-    body: "Your campaigns read against what is actually performing, not what worked last year.",
+    title: "Marketing that moves you forward",
+    body: "From social media management and SEO to digital campaigns, we help businesses reach more people, build their presence and turn attention into customers.",
     art: <InsightArt />,
   },
   {
-    title: "Always-on execution",
-    body: "Websites, social and brand work shipped continuously, rather than in quarterly bursts.",
+    title: "Your whole digital presence",
+    body: "Websites, branding and graphic design, all working together. We create a consistent online presence that reflects your business and gives people a reason to choose you.",
     art: <ExecutionArt />,
   },
   {
-    title: "Real strategists",
-    body: "People who know your market, sharpening everything the analysis surfaces.",
+    title: "A better way to work together",
+    body: "No unnecessary layers or complicated processes. Work directly with us, share your ideas and we’ll work alongside you to bring them to life.",
     art: <PeopleArt />,
   },
 ];
