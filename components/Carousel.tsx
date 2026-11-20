@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { clsx } from "@/lib/clsx";
 
 /**
@@ -21,6 +21,12 @@ export function Carousel({
   autoplay = false,
   interval = 4000,
   arrows = true,
+  heading,
+  subheading,
+  arrowsPlacement = "below",
+  align = "center",
+  rule = false,
+  gap = "default",
 }: {
   label: string;
   children: React.ReactNode;
@@ -29,6 +35,17 @@ export function Carousel({
   interval?: number;
   /** Prev/next buttons. */
   arrows?: boolean;
+  /** Title shown above the rail, opposite the arrows. */
+  heading?: string;
+  subheading?: string;
+  /** "header" puts the arrows top-right beside the heading. */
+  arrowsPlacement?: "below" | "header";
+  /** Cards centre when they fit, unless the layout wants them left-aligned. */
+  align?: "center" | "start";
+  /** Hairline between the header and the rail. */
+  rule?: boolean;
+  /** "none" lets cells butt up against each other and own their spacing. */
+  gap?: "default" | "none";
 }) {
   const railRef = useRef<HTMLDivElement>(null);
   const [atStart, setAtStart] = useState(true);
@@ -55,14 +72,16 @@ export function Carousel({
     return () => observer.disconnect();
   }, [sync]);
 
+  const gapPx = gap === "none" ? 0 : 16;
+
   const step = useCallback((direction: -1 | 1) => {
     const rail = railRef.current;
     if (!rail) return;
     // Advance by roughly one card, derived from the first child's width.
     const card = rail.firstElementChild as HTMLElement | null;
-    const distance = card ? card.offsetWidth + 16 : rail.clientWidth * 0.8;
+    const distance = card ? card.offsetWidth + gapPx : rail.clientWidth * 0.8;
     rail.scrollBy({ left: direction * distance, behavior: "smooth" });
-  }, []);
+  }, [gapPx]);
 
   // Honour the reduced-motion preference, and keep honouring it if it changes.
   useEffect(() => {
@@ -111,6 +130,10 @@ export function Carousel({
     heldRef.current = false;
   };
 
+  // The header shares the rail's gutter so the heading lines up with the
+  // first card however wide the viewport is.
+  const gutter = "px-[max(1.25rem,calc((100vw-72rem)/2))]";
+
   return (
     <div
       className={clsx("relative", className)}
@@ -121,6 +144,42 @@ export function Carousel({
       onTouchStart={hold}
       onTouchEnd={release}
     >
+      {(heading || arrowsPlacement === "header") && (
+        <div className={gutter}>
+          <div className="flex items-end justify-between gap-6">
+            <div>
+              {heading && (
+                <h2 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+                  {heading}
+                </h2>
+              )}
+              {subheading && (
+                <p className="mt-2 text-base text-ink-muted">{subheading}</p>
+              )}
+            </div>
+
+            {arrows && arrowsPlacement === "header" && (
+              <div className="flex shrink-0 items-center gap-2">
+                <SquareButton
+                  icon={ArrowLeft}
+                  disabled={atStart}
+                  onClick={() => step(-1)}
+                  label={`Scroll ${label} backward`}
+                />
+                <SquareButton
+                  icon={ArrowRight}
+                  disabled={atEnd}
+                  onClick={() => step(1)}
+                  label={`Scroll ${label} forward`}
+                />
+              </div>
+            )}
+          </div>
+
+          {rule && <hr className="mt-5 border-0 border-t border-line" />}
+        </div>
+      )}
+
       <div
         ref={railRef}
         onScroll={sync}
@@ -128,7 +187,8 @@ export function Carousel({
         aria-label={label}
         tabIndex={0}
         className={clsx(
-          "no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-2",
+          "no-scrollbar flex snap-x snap-mandatory overflow-x-auto scroll-smooth pb-2",
+          gap === "none" ? "gap-0" : "gap-4",
           // Align the first card with the page gutter while letting the rail bleed.
           // The matching scroll-padding keeps every snap point on that same line.
           "px-[max(1.25rem,calc((100vw-72rem)/2))]",
@@ -136,13 +196,13 @@ export function Carousel({
           // Centre the cards when they fit. `safe` makes the browser fall back
           // to start alignment once they overflow, so the first card can never
           // end up scrolled off the left edge and out of reach.
-          "[justify-content:safe_center]",
+          align === "center" && "[justify-content:safe_center]",
         )}
       >
         {children}
       </div>
 
-      {arrows && (
+      {arrows && arrowsPlacement === "below" && (
         <div className="mt-6 flex items-center justify-center gap-3">
           <RailButton
             icon={ChevronLeft}
@@ -186,6 +246,36 @@ function RailButton({
       )}
     >
       <Icon className="size-5" />
+    </button>
+  );
+}
+
+/** Square arrow button, used when the arrows sit beside the heading. */
+function SquareButton({
+  icon: Icon,
+  disabled = false,
+  onClick,
+  label,
+}: {
+  icon: React.ComponentType<{ className?: string }>;
+  disabled?: boolean;
+  onClick: () => void;
+  label: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      aria-label={label}
+      className={clsx(
+        "inline-flex size-10 items-center justify-center rounded-md border border-line text-ink",
+        "transition-colors hover:border-ink hover:bg-ink hover:text-white",
+        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
+        "disabled:pointer-events-none disabled:opacity-35",
+      )}
+    >
+      <Icon className="size-4" />
     </button>
   );
 }

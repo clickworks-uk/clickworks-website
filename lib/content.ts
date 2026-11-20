@@ -140,3 +140,29 @@ export const SERVICE_DETAIL: ServiceDetail[] = [
     ],
   },
 ];
+
+export type ServiceSlide = {
+  /** Caption under the artwork. */
+  label: string;
+  /**
+   * Artwork for the cell. Drop the file in /public and reference it here,
+   * e.g. "/services/websites.png". Until one is set the cell shows a neutral
+   * slot at the right size, so the row is already laid out correctly.
+   */
+  image?: string;
+  /**
+   * What the artwork shows, for anyone who cannot see it. Leave unset for a
+   * purely decorative icon: the label underneath already names the service,
+   * so repeating it would just be read out twice.
+   */
+  alt?: string;
+};
+
+/**
+ * The services rail. Add a line per service — order here is the order shown.
+ */
+export const SERVICE_SLIDES: ServiceSlide[] = [
+  { label: "Websites" },
+  { label: "Social Media" },
+  { label: "Branding" },
+];

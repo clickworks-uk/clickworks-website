@@ -1,5 +1,5 @@
 import { Container } from "@/components/Container";
-import { ServiceTiles } from "@/components/ServiceTiles";
+import { ServiceCarousel } from "@/components/ServiceCarousel";
 import { ArrowUpRight } from "lucide-react";
 
 export function Services() {
@@ -12,10 +12,14 @@ export function Services() {
           your strategy. Ready to diagnose and prescribe.
         </p>
 
-        {/* Three animated service tiles */}
-        <div id="services" className="mt-8 scroll-mt-24 sm:mt-16">
-          <ServiceTiles />
-        </div>
+      </Container>
+
+      {/* Services rail — full-bleed, so it can run off the right edge */}
+      <div id="services" className="mt-8 scroll-mt-24 sm:mt-16">
+        <ServiceCarousel />
+      </div>
+
+      <Container>
 
         {/* Human proof */}
         <p className="mx-auto mt-12 max-w-3xl text-balance text-center text-xl font-bold leading-[1.2] tracking-tight text-ink sm:mt-20 sm:text-3xl">

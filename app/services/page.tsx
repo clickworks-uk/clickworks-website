@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/Container";
 import { PageIntro } from "@/components/PageIntro";
-import { ServiceTiles } from "@/components/ServiceTiles";
+import { ServiceCarousel } from "@/components/ServiceCarousel";
 import { SERVICE_DETAIL } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -17,14 +17,14 @@ export default function ServicesPage() {
         lede="Three disciplines, run by people and sharpened by AI that never sleeps."
       />
 
-      <Container>
-        {/*
-          The tiles carry h3 headings. Without this the page would run h1
-          straight to h3, which screen-reader users navigate by.
-        */}
-        <h2 className="sr-only">The three disciplines</h2>
-        <ServiceTiles />
-      </Container>
+      {/*
+        The rail's own heading is an h2, so the page no longer needs the
+        visually hidden one that used to bridge h1 to the tiles' h3s.
+      */}
+      <ServiceCarousel
+        heading="The three disciplines"
+        subheading="Run by people, sharpened by AI that never sleeps."
+      />
 
       <Container className="py-14 sm:py-24">
         <ul className="grid gap-10 sm:grid-cols-3 sm:gap-8">

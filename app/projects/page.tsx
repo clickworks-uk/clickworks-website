@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/Container";
 import { PageIntro, PhotoSlot } from "@/components/PageIntro";
-import { ServiceTiles } from "@/components/ServiceTiles";
+import { ServiceCarousel } from "@/components/ServiceCarousel";
 import { PROJECTS } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -41,9 +41,9 @@ export default function ProjectsPage() {
         </ul>
       </Container>
 
-      <Container className="py-16 sm:py-24">
-        <ServiceTiles />
-      </Container>
+      <div className="py-16 sm:py-24">
+        <ServiceCarousel />
+      </div>
     </>
   );
 }

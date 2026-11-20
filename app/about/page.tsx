@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Container } from "@/components/Container";
 import { Wordmark } from "@/components/Wordmark";
 import { VideoShowcase } from "@/components/VideoShowcase";
-import { ServiceTiles } from "@/components/ServiceTiles";
+import { ServiceCarousel } from "@/components/ServiceCarousel";
 import { PhotoSlot } from "@/components/PageIntro";
 
 export const metadata: Metadata = {
@@ -45,9 +45,9 @@ export default function AboutPage() {
         </div>
       </Container>
 
-      <Container className="pb-16 sm:pb-24">
-        <ServiceTiles />
-      </Container>
+      <div className="pb-16 sm:pb-24">
+        <ServiceCarousel />
+      </div>
     </>
   );
 }
