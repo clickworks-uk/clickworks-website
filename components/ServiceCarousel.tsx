@@ -1,12 +1,16 @@
 import Image from "next/image";
-import { Carousel } from "@/components/Carousel";
+import { clsx } from "@/lib/clsx";
 import { SERVICE_SLIDES, type ServiceSlide } from "@/lib/content";
 
 /**
- * The services rail: divided cells that advance on their own and run off the
- * right edge. No heading and no arrows — the rule above the cells is the only
- * chrome. Autoplay pauses on hover, touch and keyboard focus, and does not
- * start at all when motion is reduced.
+ * The services marquee: divided cells scrolling continuously and repeating
+ * without a seam.
+ *
+ * The track holds the slides twice and shifts by half its own width, so the
+ * moment it wraps, the second copy is sitting exactly where the first began
+ * and the jump is invisible. It pauses on hover, and stops altogether when
+ * motion is reduced — by the OS setting or by the site's own toolbar — where
+ * the duplicate half is dropped and the row becomes a plain scrollable strip.
  */
 export function ServiceCarousel({
   slides = SERVICE_SLIDES,
@@ -16,41 +20,54 @@ export function ServiceCarousel({
   className?: string;
 }) {
   return (
-    <Carousel
-      label="Services"
-      autoplay
-      interval={3500}
-      arrows={false}
-      align="start"
-      rule
-      gap="none"
-      className={className}
+    <section
+      aria-label="Services"
+      className={clsx(
+        "marquee-viewport group relative overflow-hidden border-t border-line",
+        "motion-reduce:overflow-x-auto",
+        className,
+      )}
     >
-      {slides.map((slide) => (
-        <Cell key={slide.label} slide={slide} />
-      ))}
-    </Carousel>
+      <div
+        className={clsx(
+          "marquee-track flex w-max",
+          "animate-[marquee_32s_linear_infinite]",
+          "group-hover:[animation-play-state:paused]",
+          "motion-reduce:animate-none",
+        )}
+      >
+        {slides.map((slide) => (
+          <Cell key={slide.label} slide={slide} />
+        ))}
+
+        {/*
+          The second copy is the same content again, so it is hidden from
+          assistive tech and dropped entirely when motion is reduced.
+        */}
+        <div aria-hidden="true" className="marquee-clone flex motion-reduce:hidden">
+          {slides.map((slide) => (
+            <Cell key={`${slide.label}-clone`} slide={slide} />
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
 function Cell({ slide }: { slide: ServiceSlide }) {
   return (
     // The divider belongs to the cell, so the grid keeps its rhythm however
-    // many slides there are, and the first one lands on the page gutter.
-    // The ceiling is set so the five current slides just fit the 72rem
-    // measure: the rail then sits still on a wide screen instead of nudging a
-    // few pixels and snapping back, and still auto-scrolls on narrower ones
-    // where they genuinely overflow. Add more slides and it scrolls there too.
-    <article className="w-[clamp(160px,42vw,228px)] shrink-0 snap-start border-l border-line last:border-r">
+    // many slides there are and however far the track has travelled.
+    <article className="w-[clamp(160px,42vw,228px)] shrink-0 border-l border-line">
       <div className="flex h-[clamp(120px,30vw,170px)] items-center justify-center px-5">
         {slide.image ? (
           <Image
             src={slide.image}
             alt={slide.alt ?? ""}
-            width={160}
-            height={160}
+            width={420}
+            height={420}
             sizes="(max-width: 640px) 42vw, 228px"
-            className="max-h-full w-auto object-contain"
+            className="size-[clamp(72px,18vw,110px)] object-contain"
           />
         ) : (
           <div

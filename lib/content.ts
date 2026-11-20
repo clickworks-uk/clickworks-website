@@ -162,9 +162,11 @@ export type ServiceSlide = {
  * The services rail. Add a line per service — order here is the order shown.
  */
 export const SERVICE_SLIDES: ServiceSlide[] = [
-  { label: "Websites" },
-  { label: "Social Media" },
-  { label: "Branding" },
-  { label: "Search Engine Optimisation" },
-  { label: "Consultation" },
+  { label: "Websites", image: "/services/websites.png" },
+  { label: "Social Media", image: "/services/social-media.png" },
+  { label: "Branding", image: "/services/branding.png" },
+  { label: "Search Engine Optimisation", image: "/services/seo.png" },
+  { label: "Consultation", image: "/services/consultation.png" },
+  // /public/services/tag.png is cut and unused — add a slide for it here if
+  // there is a sixth service it suits.
 ];

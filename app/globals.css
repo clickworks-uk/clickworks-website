@@ -220,6 +220,43 @@
   }
 }
 
+/*
+ * Services marquee. The track holds the slides twice, so shifting it by half
+ * its width lands exactly on the start of the second copy and the loop is
+ * seamless.
+ */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/*
+ * The global reduced-motion rule collapses animation-duration, which for an
+ * infinite marquee would leave it jittering at the end state. Stop it dead
+ * instead, and the duplicate half is hidden so one clean set remains.
+ */
+:root[data-a11y-motion="reduced"] .marquee-track {
+  animation: none !important;
+}
+
+/*
+ * The Tailwind motion-reduce variants only watch the OS media query, so the
+ * toolbar needs its own pair: drop the duplicate half and let the row be
+ * scrolled by hand, or the frozen marquee would show every slide twice with
+ * the far ones out of reach.
+ */
+:root[data-a11y-motion="reduced"] .marquee-clone {
+  display: none;
+}
+
+:root[data-a11y-motion="reduced"] .marquee-viewport {
+  overflow-x: auto;
+}
+
 @keyframes nav-cta-in {
   from {
     opacity: 0;
