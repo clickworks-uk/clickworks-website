@@ -31,7 +31,7 @@ export function ServiceCarousel({
       <div
         className={clsx(
           "marquee-track flex w-max",
-          "animate-[marquee_32s_linear_infinite]",
+          "animate-[marquee_38s_linear_infinite]",
           "group-hover:[animation-play-state:paused]",
           "motion-reduce:animate-none",
         )}
@@ -77,8 +77,8 @@ function Cell({ slide }: { slide: ServiceSlide }) {
         )}
       </div>
 
-      {/* Same treatment as the project and team card titles. */}
-      <h3 className="text-balance px-5 pb-8 pt-2 text-base font-semibold tracking-tight text-ink sm:text-lg">
+      {/* Light weight, so the halftone artwork stays the loudest thing here. */}
+      <h3 className="text-balance px-5 pb-8 pt-2 text-base font-normal tracking-tight text-ink sm:text-lg">
         {slide.label}
       </h3>
     </article>

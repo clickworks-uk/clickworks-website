@@ -13,7 +13,7 @@ import {
 export function ServiceTiles() {
   return (
     <div className="grid gap-7 sm:grid-cols-3 sm:gap-5">
-      <Tile title="Websites" graphic={<WebsitesGraphic />} />
+      <Tile title="Web Development" graphic={<WebsitesGraphic />} />
       <Tile title="Social Media" graphic={<SocialGraphic />} />
       <Tile title="Branding" graphic={<BrandingGraphic />} />
     </div>

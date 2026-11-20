@@ -29,7 +29,7 @@ const COLUMNS = [
   {
     heading: "Services",
     links: [
-      { label: "Websites", href: "/services" },
+      { label: "Web Development", href: "/services" },
       { label: "Social Media", href: "/services" },
       { label: "Branding", href: "/services" },
     ],
