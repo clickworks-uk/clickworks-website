@@ -1,5 +1,4 @@
 import { Container } from "@/components/Container";
-import { VideoShowcase } from "@/components/VideoShowcase";
 import { Wordmark } from "@/components/Wordmark";
 
 export function Hero() {
@@ -27,19 +26,6 @@ export function Hero() {
 
         </Container>
       </div>
-
-      {/* Welcome + video + app download */}
-      <Container className="scroll-mt-20 pb-6 pt-16 sm:py-24" id="about">
-        <h2 className="flex flex-wrap items-center justify-center gap-x-2.5 text-center text-2xl font-semibold tracking-tight text-ink sm:text-3xl lg:text-4xl">
-          Welcome to <Wordmark className="h-[0.85em]" />
-        </h2>
-
-        <div className="mx-auto mt-6 max-w-4xl sm:mt-10">
-          <VideoShowcase />
-        </div>
-
-
-      </Container>
     </section>
   );
 }

@@ -5,17 +5,8 @@ import { ArrowUpRight } from "lucide-react";
 export function Services() {
   return (
     <section id="features" className="scroll-mt-20 pb-8 pt-6 sm:pb-24 sm:pt-10">
-      <Container>
-        {/* Value proposition — sized to break onto two lines */}
-        <p className="-mx-5 max-w-4xl text-balance text-center text-[clamp(1.0625rem,4.6vw,1.25rem)] font-semibold leading-[1.25] tracking-tight text-ink sm:mx-auto sm:text-3xl">
-          Imagine the power of 1,000 marketers in your pocket, always analyzing
-          your strategy. Ready to diagnose and prescribe.
-        </p>
-
-      </Container>
-
       {/* Services rail — full-bleed, so it can run off the right edge */}
-      <div id="services" className="mt-8 scroll-mt-24 sm:mt-16">
+      <div id="services" className="scroll-mt-24">
         <ServiceCarousel />
       </div>
 
