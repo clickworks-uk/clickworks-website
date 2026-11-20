@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { Container } from "@/components/Container";
 import { Wordmark } from "@/components/Wordmark";
 
@@ -10,11 +12,19 @@ import { Wordmark } from "@/components/Wordmark";
  * imply a product you can use today, which is exactly the claim the rest of
  * the site was cleared of.
  */
-const FEATURES = [
+type Feature = {
+  title: string;
+  body: string;
+  /** A supplied image fills the panel; without one the drawn art is used. */
+  image?: string;
+  art?: React.ReactNode;
+};
+
+const FEATURES: Feature[] = [
   {
     title: "Marketing that moves you forward",
     body: "From social media management and SEO to digital campaigns, we help businesses reach more people, build their presence and turn attention into customers.",
-    art: <InsightArt />,
+    image: "/features/marketing.webp",
   },
   {
     title: "Your whole digital presence",
@@ -43,7 +53,28 @@ export function WelcomeFeatures() {
                 aria-hidden="true"
                 className="relative aspect-4/3 overflow-hidden rounded-2xl bg-paper-soft ring-1 ring-line"
               >
-                {feature.art}
+                {feature.image ? (
+                  /*
+                   * The supplied composition is inset rather than bled to the
+                   * panel edge, so the light panel frames it the way the
+                   * reference does. The absolute wrapper gives the image a
+                   * definite height to size against — `h-full` directly on an
+                   * aspect-ratio box resolves circularly and the image lands
+                   * at its natural size.
+                   */
+                  <div className="absolute inset-0 flex items-center justify-center p-5 sm:p-6">
+                    <Image
+                      src={feature.image}
+                      alt=""
+                      width={1180}
+                      height={1333}
+                      sizes="(max-width: 640px) 90vw, 30vw"
+                      className="max-h-full w-auto max-w-full object-contain"
+                    />
+                  </div>
+                ) : (
+                  feature.art
+                )}
               </div>
 
               <h3 className="mt-5 text-lg font-normal tracking-tight text-ink sm:text-xl">
