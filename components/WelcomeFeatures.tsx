@@ -51,7 +51,7 @@ export function WelcomeFeatures() {
             <li key={feature.title}>
               <div
                 aria-hidden="true"
-                className="relative aspect-4/3 overflow-hidden rounded-2xl bg-paper-soft ring-1 ring-line"
+                className="relative aspect-4/3 overflow-hidden bg-paper-soft ring-1 ring-line"
               >
                 {feature.image ? (
                   /*
