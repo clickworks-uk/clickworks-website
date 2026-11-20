@@ -83,14 +83,31 @@ export function Carousel({
     rail.scrollBy({ left: direction * distance, behavior: "smooth" });
   }, [gapPx]);
 
-  // Honour the reduced-motion preference, and keep honouring it if it changes.
+  /*
+    Honour the reduced-motion preference and keep honouring it if it changes.
+    Two sources count: the OS setting, and the site's own toolbar, which writes
+    data-a11y-motion on <html>. The toolbar only reaches CSS, so without the
+    observer a visitor who turned motion off here would still get autoplay.
+  */
   useEffect(() => {
     if (!autoplay || typeof window === "undefined") return;
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const apply = () => setCanAutoplay(!query.matches);
+    const apply = () =>
+      setCanAutoplay(
+        !query.matches &&
+          document.documentElement.dataset.a11yMotion !== "reduced",
+      );
     apply();
     query.addEventListener("change", apply);
-    return () => query.removeEventListener("change", apply);
+    const observer = new MutationObserver(apply);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-a11y-motion"],
+    });
+    return () => {
+      query.removeEventListener("change", apply);
+      observer.disconnect();
+    };
   }, [autoplay]);
 
   useEffect(() => {
@@ -144,7 +161,7 @@ export function Carousel({
       onTouchStart={hold}
       onTouchEnd={release}
     >
-      {(heading || arrowsPlacement === "header") && (
+      {(heading || rule || (arrows && arrowsPlacement === "header")) && (
         <div className={gutter}>
           <div className="flex items-end justify-between gap-6">
             <div>

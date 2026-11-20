@@ -165,4 +165,6 @@ export const SERVICE_SLIDES: ServiceSlide[] = [
   { label: "Websites" },
   { label: "Social Media" },
   { label: "Branding" },
+  { label: "Search Engine Optimisation" },
+  { label: "Consultation" },
 ];
