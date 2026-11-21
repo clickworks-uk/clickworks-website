@@ -1,11 +1,12 @@
 import { Container } from "@/components/Container";
+import { VideoFrame } from "@/components/VideoFrame";
 import { Wordmark } from "@/components/Wordmark";
 
 /**
- * Centred "Welcome to clickworks" over a single landscape panel.
+ * Centred "Welcome to clickworks" over the founder's video.
  *
- * The panel is an empty square-cornered slot waiting on artwork — drop a
- * landscape image in here and it fills the frame.
+ * The frame is empty until a file is dropped in `public/` and passed to
+ * VideoFrame as `src`.
  */
 export function WelcomeFeatures() {
   return (
@@ -15,10 +16,7 @@ export function WelcomeFeatures() {
           Welcome to <Wordmark className="h-[0.85em]" />
         </h2>
 
-        <div
-          aria-hidden="true"
-          className="relative mt-10 aspect-video w-full overflow-hidden bg-paper-soft ring-1 ring-line sm:mt-14"
-        />
+        <VideoFrame className="mt-10 sm:mt-14" />
       </Container>
     </section>
   );
