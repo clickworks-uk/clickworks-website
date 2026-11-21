@@ -30,10 +30,12 @@ export function TeamRow() {
                 )}
               </div>
 
-              <h3 className="mt-4 text-base font-normal tracking-tight text-ink sm:text-lg">
+              <h3 className="mt-4 text-base font-semibold tracking-tight text-ink sm:text-lg">
                 {member.name}
               </h3>
-              <p className="mt-1.5 text-xs font-medium uppercase leading-relaxed tracking-[0.14em] text-ink-muted">
+              {/* Same face, light weight — the contrast carries the hierarchy
+                  rather than a separate tracked-caps treatment. */}
+              <p className="mt-1 text-base font-light tracking-tight text-ink-muted sm:text-lg">
                 {member.role}
               </p>
             </li>
