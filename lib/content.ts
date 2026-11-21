@@ -104,53 +104,13 @@ export const NEWS: NewsPost[] = [
   },
 ];
 
-export type ServiceDetail = {
-  title: string;
-  blurb: string;
-  includes: string[];
-};
-
-export const SERVICE_DETAIL: ServiceDetail[] = [
-  {
-    title: "Web Development",
-    blurb:
-      "Sites built to sell, not to win awards. Fast, measurable and yours to run.",
-    includes: [
-      "Design and build",
-      "Copy and content structure",
-      "Analytics and conversion tracking",
-      "Ongoing iteration",
-    ],
-  },
-  {
-    title: "Social Media",
-    blurb:
-      "A content engine with a point of view, scheduled against what actually performs.",
-    includes: [
-      "Channel strategy",
-      "Content production",
-      "Community management",
-      "Monthly reporting",
-    ],
-  },
-  {
-    title: "Branding",
-    blurb:
-      "An identity that holds up everywhere it lands, from a shopfront to a story.",
-    includes: [
-      "Positioning and naming",
-      "Identity and art direction",
-      "Brand guidelines",
-      "Launch assets",
-    ],
-  },
-];
-
 export type ServiceSlide = {
   /** Caption under the artwork. */
   label: string;
   /** Used in the enquiry link, e.g. "web-development". */
   slug: string;
+  /** The individual services under this heading, listed on /services. */
+  includes?: string[];
   /**
    * Artwork for the cell. Drop the file in /public and reference it here,
    * e.g. "/services/websites.png". Until one is set the cell shows a neutral
@@ -169,11 +129,72 @@ export type ServiceSlide = {
  * The services rail. Add a line per service — order here is the order shown.
  */
 export const SERVICE_SLIDES: ServiceSlide[] = [
-  { label: "Web Development", slug: "web-development", image: "/services/websites.png" },
-  { label: "Social Media", slug: "social-media", image: "/services/social-media.png" },
-  { label: "Branding", slug: "branding", image: "/services/branding.png" },
-  { label: "Search Engine Optimisation", slug: "seo", image: "/services/seo.png" },
-  { label: "Consultation", slug: "consultation", image: "/services/consultation.png" },
-  { label: "Graphic Design", slug: "graphic-design", image: "/services/tag.png" },
-  { label: "Software Development", slug: "software-development", image: "/services/software-development.png" },
+  {
+    label: "Web Development",
+    slug: "web-development",
+    image: "/services/websites.png",
+    includes: [
+      "Website Design",
+      "Web Development",
+      "Website Redesign",
+    ],
+  },
+  {
+    label: "Social Media",
+    slug: "social-media",
+    image: "/services/social-media.png",
+    includes: [
+      "Social Media Strategy",
+      "Content Creation",
+      "Social Advertising",
+    ],
+  },
+  {
+    label: "Branding",
+    slug: "branding",
+    image: "/services/branding.png",
+    includes: [
+      "Brand Strategy",
+      "Visual Identity",
+      "Logo Design",
+    ],
+  },
+  {
+    label: "Search Engine Optimisation",
+    slug: "seo",
+    image: "/services/seo.png",
+    includes: [
+      "Technical SEO",
+      "On-Page & Content SEO",
+      "Off-Page SEO",
+      "Commercial & Scaled SEO",
+      "Local & Business SEO",
+      "AI & Generative Optimisation (GEO/AEO)",
+    ],
+  },
+  {
+    label: "Digital Marketing",
+    slug: "digital-marketing",
+    // No icon supplied yet; the cell shows a neutral slot until one is.
+    includes: [
+      "Digital Strategy",
+      "Marketing Consultation",
+      "Paid Media (PPC)",
+    ],
+  },
+  {
+    label: "Consultation",
+    slug: "consultation",
+    image: "/services/consultation.png",
+  },
+  {
+    label: "Graphic Design",
+    slug: "graphic-design",
+    image: "/services/tag.png",
+  },
+  {
+    label: "Software Development",
+    slug: "software-development",
+    image: "/services/software-development.png",
+  },
 ];
