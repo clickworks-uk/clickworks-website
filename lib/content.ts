@@ -52,18 +52,12 @@ export type TeamMember = {
   photo?: string;
 };
 
-/**
- * Only the founder is filled in. The rest are deliberately left as roles with
- * a placeholder name, so nobody is invented — swap each `name` as the team is
- * confirmed.
- */
+/** The core team, in the order they are shown. */
 export const TEAM: TeamMember[] = [
-  { name: "Samandeep Singh", role: "Founder" },
-  { name: "Name to come", role: "Strategy Lead" },
-  { name: "Name to come", role: "Creative Director" },
-  { name: "Name to come", role: "Social Lead" },
-  { name: "Name to come", role: "Web Engineer" },
-  { name: "Name to come", role: "Client Partner" },
+  { name: "Samandeep Singh", role: "Founder & CEO" },
+  { name: "Sahib Gill", role: "Co-Founder" },
+  { name: "Dilbagh Kooner", role: "Head of AI" },
+  { name: "Raj Rehal", role: "Lead Graphic Designer" },
 ];
 
 export type NewsPost = {
