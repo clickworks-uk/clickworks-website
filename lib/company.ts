@@ -46,7 +46,7 @@ export const SOCIALS = [
   // appears; SOCIAL_ICONS in Footer.tsx already maps the label.
 ] as const;
 
-export const SOCIAL_HANDLE = "@clickworksai";
+export const SOCIAL_HANDLE = "@getclickworks";
 
 /**
  * Flip to true only once something is actually set that needs consent —

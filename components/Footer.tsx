@@ -9,13 +9,16 @@ import {
   SOCIAL_HANDLE,
   TRADING_NAME,
 } from "@/lib/company";
+import { SERVICE_SLIDES } from "@/lib/content";
 
 const COLUMNS = [
   {
     heading: "Company",
     links: [
       { label: "About", href: "/about" },
-      { label: "Core Team", href: "/our-team" },
+      // Named as the nav names it, rather than "Core Team".
+      { label: "Our Team", href: "/our-team" },
+      { label: "Community", href: "/community" },
       { label: "Contact", href: "/contact" },
     ],
     // Second group stacked under the first, as in the reference layout.
@@ -28,17 +31,19 @@ const COLUMNS = [
   },
   {
     heading: "Services",
-    links: [
-      { label: "Web Development", href: "/services" },
-      { label: "Social Media", href: "/services" },
-      { label: "Branding", href: "/services" },
-    ],
+    // Taken from the one list the rails and the services page use, so the
+    // footer cannot fall behind it again. Each goes where its tile goes.
+    links: SERVICE_SLIDES.map((service) => ({
+      label: service.label,
+      href: `/enquiry?service=${service.slug}`,
+    })),
   },
   {
-    heading: "Learn",
+    heading: "Explore",
     links: [
+      { label: "Projects", href: "/projects" },
       { label: "News", href: "/news" },
-      { label: "Our Work", href: "/projects" },
+      { label: "Start an enquiry", href: "/enquiry" },
     ],
   },
 ];
