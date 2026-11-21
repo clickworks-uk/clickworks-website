@@ -73,6 +73,11 @@ export type NewsPost = {
   date: string;
   /** Cover photo. Drop the file in /public and reference it here. */
   photo?: string;
+  /**
+   * Where "For more" points. Without one the label still shows but is not a
+   * link, so nothing on the page leads to a page that does not exist.
+   */
+  href?: string;
 };
 
 const PLACEHOLDER_BODY =
@@ -144,6 +149,8 @@ export const SERVICE_DETAIL: ServiceDetail[] = [
 export type ServiceSlide = {
   /** Caption under the artwork. */
   label: string;
+  /** Used in the enquiry link, e.g. "web-development". */
+  slug: string;
   /**
    * Artwork for the cell. Drop the file in /public and reference it here,
    * e.g. "/services/websites.png". Until one is set the cell shows a neutral
@@ -162,11 +169,11 @@ export type ServiceSlide = {
  * The services rail. Add a line per service — order here is the order shown.
  */
 export const SERVICE_SLIDES: ServiceSlide[] = [
-  { label: "Web Development", image: "/services/websites.png" },
-  { label: "Social Media", image: "/services/social-media.png" },
-  { label: "Branding", image: "/services/branding.png" },
-  { label: "Search Engine Optimisation", image: "/services/seo.png" },
-  { label: "Consultation", image: "/services/consultation.png" },
-  { label: "Graphic Design", image: "/services/tag.png" },
-  { label: "Software Development", image: "/services/software-development.png" },
+  { label: "Web Development", slug: "web-development", image: "/services/websites.png" },
+  { label: "Social Media", slug: "social-media", image: "/services/social-media.png" },
+  { label: "Branding", slug: "branding", image: "/services/branding.png" },
+  { label: "Search Engine Optimisation", slug: "seo", image: "/services/seo.png" },
+  { label: "Consultation", slug: "consultation", image: "/services/consultation.png" },
+  { label: "Graphic Design", slug: "graphic-design", image: "/services/tag.png" },
+  { label: "Software Development", slug: "software-development", image: "/services/software-development.png" },
 ];

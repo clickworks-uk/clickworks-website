@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { Container } from "@/components/Container";
+import { Carousel } from "@/components/Carousel";
 import { PageIntro, PhotoSlot } from "@/components/PageIntro";
-import { NEWS } from "@/lib/content";
+import { NEWS, type NewsPost } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "News — Clickworks",
@@ -16,30 +16,40 @@ export default function NewsPage() {
         lede="What the team has been working on, and where we have been."
       />
 
-      <Container className="pb-16 sm:pb-24">
-        <ul className="flex flex-col gap-10 sm:gap-14">
-          {NEWS.map((post, i) => (
-            <li
-              key={`${post.title}-${i}`}
-              className="grid gap-5 sm:grid-cols-[minmax(0,0.9fr)_minmax(0,1.3fr)] sm:items-start sm:gap-10"
-            >
-              <PhotoSlot className="aspect-video w-full" label="Photo" />
-
-              <article>
-                <h2 className="text-balance text-xl font-semibold leading-tight tracking-tight text-ink sm:text-2xl">
-                  {post.title}
-                </h2>
-                <p className="mt-3 text-sm leading-relaxed text-ink sm:text-base">
-                  {post.body}
-                </p>
-                <p className="mt-3 text-sm italic text-ink-muted sm:text-base">
-                  {post.date}
-                </p>
-              </article>
-            </li>
-          ))}
-        </ul>
-      </Container>
+      <Carousel label="News stories" arrows={false} className="pb-20 sm:pb-28">
+        {NEWS.map((post, i) => (
+          <NewsCard key={`${post.title}-${i}`} post={post} />
+        ))}
+      </Carousel>
     </>
+  );
+}
+
+function NewsCard({ post }: { post: NewsPost }) {
+  return (
+    <article className="w-[clamp(260px,78vw,360px)] shrink-0 snap-start">
+      <PhotoSlot className="aspect-video w-full" label="Photo" />
+
+      <h2 className="mt-5 text-balance text-base font-semibold leading-snug tracking-tight text-ink sm:text-lg">
+        {post.title}
+      </h2>
+
+      {/*
+        Only a link once there is somewhere to go. Until then the label is
+        plain text, rather than an anchor onto a page that does not exist.
+      */}
+      {post.href ? (
+        <a
+          href={post.href}
+          className="mt-3 inline-block text-sm text-ink underline underline-offset-4 hover:text-ink-muted sm:text-base"
+        >
+          For more
+        </a>
+      ) : (
+        <span className="mt-3 inline-block text-sm text-ink-muted underline underline-offset-4 sm:text-base">
+          For more
+        </span>
+      )}
+    </article>
   );
 }

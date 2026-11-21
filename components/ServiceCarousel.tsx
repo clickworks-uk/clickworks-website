@@ -33,6 +33,9 @@ export function ServiceCarousel({
           "marquee-track flex w-max",
           "animate-[marquee_38s_linear_infinite]",
           "group-hover:[animation-play-state:paused]",
+          // Keyboard users must not have to chase a link that is sliding
+          // away, so focus inside the rail stops it as surely as hover.
+          "group-focus-within:[animation-play-state:paused]",
           "motion-reduce:animate-none",
         )}
       >
@@ -46,7 +49,7 @@ export function ServiceCarousel({
         */}
         <div aria-hidden="true" className="marquee-clone flex motion-reduce:hidden">
           {slides.map((slide) => (
-            <Cell key={`${slide.label}-clone`} slide={slide} />
+            <Cell key={`${slide.label}-clone`} slide={slide} clone />
           ))}
         </div>
       </div>
@@ -54,11 +57,19 @@ export function ServiceCarousel({
   );
 }
 
-function Cell({ slide }: { slide: ServiceSlide }) {
+function Cell({ slide, clone = false }: { slide: ServiceSlide; clone?: boolean }) {
   return (
     // The divider belongs to the cell, so the grid keeps its rhythm however
     // many slides there are and however far the track has travelled.
     <article className="w-[clamp(160px,42vw,228px)] shrink-0 border-l border-line">
+      <a
+        href={`/enquiry?service=${slide.slug}`}
+        // The clone is aria-hidden, so its links must leave the tab order
+        // too — otherwise a keyboard user lands on something no screen
+        // reader can announce.
+        tabIndex={clone ? -1 : undefined}
+        className="block transition-colors hover:bg-paper-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent"
+      >
       <div className="flex h-[clamp(120px,30vw,170px)] items-center justify-center px-5">
         {slide.image ? (
           <Image
@@ -78,9 +89,10 @@ function Cell({ slide }: { slide: ServiceSlide }) {
       </div>
 
       {/* Light weight, so the halftone artwork stays the loudest thing here. */}
-      <h3 className="text-balance px-5 pb-8 pt-2 text-base font-normal tracking-tight text-ink sm:text-lg">
-        {slide.label}
-      </h3>
+        <h3 className="text-balance px-5 pb-8 pt-2 text-base font-normal tracking-tight text-ink sm:text-lg">
+          {slide.label}
+        </h3>
+      </a>
     </article>
   );
 }

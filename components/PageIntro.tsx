@@ -36,7 +36,7 @@ export function PhotoSlot({
   return (
     <div
       className={
-        "flex items-center justify-center overflow-hidden rounded-3xl bg-paper-soft ring-1 ring-line " +
+        "flex items-center justify-center overflow-hidden bg-paper-soft ring-1 ring-line " +
         (className ?? "")
       }
     >

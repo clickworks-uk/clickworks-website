@@ -68,5 +68,16 @@ export const HAS_LEGAL_DETAILS = Boolean(
 /** Where privacy requests go, falling back to the general address. */
 export const PRIVACY_CONTACT = COMPANY.privacyEmail || COMPANY.contactEmail;
 
+/**
+ * Where the enquiry form posts. Empty until there is somewhere for
+ * submissions to go — a form backend (Formspree, Basin, Formcarry) or your
+ * own endpoint. While it is empty the form renders but will not submit,
+ * because silently dropping an enquiry is worse than saying so.
+ *
+ * Setting this starts collecting personal data, so the privacy policy needs
+ * a line covering it: what is collected, why, and how long it is kept.
+ */
+export const FORM_ENDPOINT = "";
+
 /** Review date shown on the policy pages. */
 export const POLICY_UPDATED = "2 November 2026";
