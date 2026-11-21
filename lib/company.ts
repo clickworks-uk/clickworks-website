@@ -34,13 +34,13 @@ export const TRADING_NAME = "Clickworks";
 export const SOCIALS = [
   {
     label: "Instagram",
-    href: "https://www.instagram.com/clickworksai",
+    href: "https://www.instagram.com/getclickworks",
   },
-  { label: "TikTok", href: "https://www.tiktok.com/@clickworksai" },
-  { label: "X", href: "https://x.com/clickworksai" },
+  { label: "TikTok", href: "https://www.tiktok.com/@getclickworks" },
+  { label: "X", href: "https://x.com/getclickworks" },
   {
     label: "LinkedIn",
-    href: "https://www.linkedin.com/company/clickworks-it",
+    href: "https://www.linkedin.com/company/getclickworks",
   },
   // No YouTube channel yet. Add an entry here when there is one and the icon
   // appears; SOCIAL_ICONS in Footer.tsx already maps the label.
