@@ -3,6 +3,7 @@ import { Container } from "@/components/Container";
 import { PageIntro, PhotoSlot } from "@/components/PageIntro";
 import { ServiceCarousel } from "@/components/ServiceCarousel";
 import { Testimonials } from "@/components/Testimonials";
+import { TeamRow } from "@/components/TeamRow";
 import { PROJECTS } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -50,6 +51,8 @@ export default function ProjectsPage() {
       </div>
 
       <Testimonials />
+
+      <TeamRow />
     </>
   );
 }
