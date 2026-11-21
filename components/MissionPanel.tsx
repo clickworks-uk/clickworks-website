@@ -31,16 +31,16 @@ const RING = [
 
 export function MissionPanel() {
   return (
-    <section className="scroll-mt-20 py-3 sm:py-24" id="mission">
-      {/* Full-bleed on phones, back inside the page gutter from sm up. */}
-      <div className="mx-auto w-full max-w-6xl sm:px-8">
+    <section className="scroll-mt-20" id="mission">
+      {/* Edge to edge at every width — a band across the page, not a card. */}
+      <div className="w-full">
         {/*
           The ring's geometry is carried as custom properties so the two
           layouts can differ: a tall, card-heavy ellipse that bleeds off a
           full-width phone panel, and the wider, smaller-carded ring on
           desktop.
         */}
-        <div className="relative isolate h-[92svh] overflow-hidden bg-black [--card-scale:2.4] [--ring-rx:46%] [--ring-ry:31%] sm:aspect-video sm:h-auto sm:rounded-[2.5rem] sm:[--card-scale:1] sm:[--ring-rx:33%] sm:[--ring-ry:36%]">
+        <div className="relative isolate h-[92svh] overflow-hidden bg-black [--card-scale:2.4] [--ring-rx:46%] [--ring-ry:31%] sm:aspect-video sm:h-auto sm:[--card-scale:1] sm:[--ring-rx:33%] sm:[--ring-ry:36%]">
           {/* The ring itself */}
           <div aria-hidden className="ring-sway absolute inset-0 animate-[ring-sway_38s_ease-in-out_infinite]">
             {RING.map((c, i) => {

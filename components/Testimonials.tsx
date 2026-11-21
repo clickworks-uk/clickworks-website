@@ -93,11 +93,10 @@ export function Testimonials() {
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   const [playing, setPlaying] = useState(false);
   const platform = PLATFORMS[testimonial.platform];
-  const PlatformIcon = platform.icon;
 
   if (testimonial.src && playing) {
     return (
-      <article className="relative aspect-4/5 w-[clamp(190px,50vw,320px)] shrink-0 snap-start overflow-hidden rounded-3xl bg-ink shadow-soft">
+      <article className="relative aspect-4/5 w-[clamp(190px,50vw,320px)] shrink-0 snap-start overflow-hidden bg-ink shadow-soft">
         <video
           className="absolute inset-0 size-full object-cover"
           src={testimonial.src}
@@ -111,7 +110,7 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   }
 
   return (
-    <article className="relative aspect-4/5 w-[clamp(190px,50vw,320px)] shrink-0 snap-start overflow-hidden rounded-3xl bg-ink shadow-soft">
+    <article className="relative aspect-4/5 w-[clamp(190px,50vw,320px)] shrink-0 snap-start overflow-hidden bg-ink shadow-soft">
       {testimonial.poster ? (
         <Image
           src={testimonial.poster}
@@ -127,39 +126,19 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
         />
       )}
 
-      {/* Scrim so the quote holds up over a bright frame */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-linear-to-t from-black/85 via-black/35 to-transparent"
-      />
-
       <button
         type="button"
         onClick={() => testimonial.src && setPlaying(true)}
-        aria-label={
-          testimonial.src
-            ? `Play ${testimonial.name}'s story from ${platform.name}`
-            : undefined
-        }
+        aria-label={`Play ${testimonial.name}'s story from ${platform.name}`}
         aria-disabled={!testimonial.src}
-        className="group absolute inset-0 flex flex-col justify-end p-4 text-left sm:p-6"
+        className="group absolute inset-0"
       >
+        {/*
+          The only mark on the card. Its accessible name still carries who
+          the story is from — that is read out, not shown.
+        */}
         <span className="absolute right-5 top-5 flex size-10 items-center justify-center rounded-full bg-white/15 ring-1 ring-white/25 backdrop-blur-sm transition-colors group-hover:bg-white/25">
-          <Play className="size-4 translate-x-px fill-white text-white" />
-        </span>
-
-        <span className="relative block text-xs font-medium leading-snug text-white sm:text-lg">
-          &ldquo;{testimonial.quote}&rdquo;
-        </span>
-
-        <span className="relative mt-4 flex items-center gap-2">
-          <span className="whitespace-nowrap text-[0.6875rem] font-semibold text-white sm:text-sm">
-            {testimonial.name}
-          </span>
-          <PlatformIcon className="size-3.5 shrink-0 text-white/55" />
-          <span className="truncate text-[0.6875rem] text-white/55 sm:text-sm">
-            {testimonial.handle}
-          </span>
+          <Play aria-hidden="true" className="size-4 translate-x-px fill-white text-white" />
         </span>
       </button>
     </article>
