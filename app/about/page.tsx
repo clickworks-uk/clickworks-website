@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Container } from "@/components/Container";
 import { VideoFrame } from "@/components/VideoFrame";
 import { ServiceCarousel } from "@/components/ServiceCarousel";
+import { TeamRow } from "@/components/TeamRow";
 
 export const metadata: Metadata = {
   title: "About Us — Clickworks",
@@ -15,6 +16,8 @@ export default function AboutPage() {
       <Container className="pb-12 pt-12 sm:pb-20 sm:pt-20">
         <VideoFrame />
       </Container>
+
+      <TeamRow />
 
       <div className="pb-16 sm:pb-24">
         <ServiceCarousel />
