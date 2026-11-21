@@ -109,8 +109,6 @@ export type ServiceSlide = {
   label: string;
   /** Used in the enquiry link, e.g. "web-development". */
   slug: string;
-  /** The individual services under this heading, listed on /services. */
-  includes?: string[];
   /**
    * Artwork for the cell. Drop the file in /public and reference it here,
    * e.g. "/services/websites.png". Until one is set the cell shows a neutral
@@ -133,54 +131,26 @@ export const SERVICE_SLIDES: ServiceSlide[] = [
     label: "Web Development",
     slug: "web-development",
     image: "/services/websites.png",
-    includes: [
-      "Website Design",
-      "Web Development",
-      "Website Redesign",
-    ],
   },
   {
     label: "Social Media",
     slug: "social-media",
     image: "/services/social-media.png",
-    includes: [
-      "Social Media Strategy",
-      "Content Creation",
-      "Social Advertising",
-    ],
   },
   {
     label: "Branding",
     slug: "branding",
     image: "/services/branding.png",
-    includes: [
-      "Brand Strategy",
-      "Visual Identity",
-      "Logo Design",
-    ],
   },
   {
     label: "Search Engine Optimisation",
     slug: "seo",
     image: "/services/seo.png",
-    includes: [
-      "Technical SEO",
-      "On-Page & Content SEO",
-      "Off-Page SEO",
-      "Commercial & Scaled SEO",
-      "Local & Business SEO",
-      "AI & Generative Optimisation (GEO/AEO)",
-    ],
   },
   {
     label: "Digital Marketing",
     slug: "digital-marketing",
     // No icon supplied yet; the cell shows a neutral slot until one is.
-    includes: [
-      "Digital Strategy",
-      "Marketing Consultation",
-      "Paid Media (PPC)",
-    ],
   },
   {
     label: "Consultation",

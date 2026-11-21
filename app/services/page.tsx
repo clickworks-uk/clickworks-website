@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
 import { Container } from "@/components/Container";
 import { PageIntro } from "@/components/PageIntro";
 import { SERVICE_SLIDES } from "@/lib/content";
@@ -21,17 +20,18 @@ export default function ServicesPage() {
 
       <Container className="pb-20 sm:pb-28">
         {/*
-          A column per service: the tile opens the enquiry form with that
-          service chosen, and the individual services sit underneath it,
-          separated by hairlines. Columns start at the top so a long list
-          does not stretch its neighbours.
+          A grid rather than the rail: every service visible at once, three
+          to a row, each cell an equal share of the width. Seven services
+          leaves the last row short, so the rules live on the cells rather
+          than on a filled container behind them — otherwise the empty
+          ninth cell shows up as a grey block.
         */}
-        <ul className="grid grid-cols-1 items-start gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="grid grid-cols-1 border-l border-t border-line sm:grid-cols-2 lg:grid-cols-3">
           {SERVICE_SLIDES.map((service) => (
-            <li key={service.slug}>
+            <li key={service.slug} className="border-b border-r border-line">
               <a
                 href={`/enquiry?service=${service.slug}`}
-                className="group flex items-center gap-4 bg-paper-soft px-5 py-4 ring-1 ring-line transition-colors hover:bg-line/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                className="flex h-full flex-col items-center justify-start gap-5 px-6 py-10 transition-colors hover:bg-paper-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent"
               >
                 {service.image ? (
                   <Image
@@ -39,39 +39,20 @@ export default function ServicesPage() {
                     alt=""
                     width={420}
                     height={420}
-                    sizes="48px"
-                    className="size-10 shrink-0 object-contain"
+                    sizes="(max-width: 640px) 40vw, 160px"
+                    className="size-[clamp(84px,22vw,128px)] object-contain"
                   />
                 ) : (
-                  <span
+                  <div
                     aria-hidden="true"
-                    className="size-10 shrink-0 bg-paper ring-1 ring-line"
+                    className="size-[clamp(84px,22vw,128px)] bg-paper-soft ring-1 ring-line"
                   />
                 )}
 
-                <h2 className="min-w-0 flex-1 text-balance text-base font-normal leading-snug tracking-tight text-ink">
+                <h2 className="text-balance text-center text-base font-normal tracking-tight text-ink sm:text-lg">
                   {service.label}
                 </h2>
-
-                <ArrowUpRight
-                  aria-hidden="true"
-                  strokeWidth={1.75}
-                  className="size-5 shrink-0 text-ink-muted transition-transform duration-300 ease-(--ease-out-soft) group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                />
               </a>
-
-              {service.includes && (
-                <ul className="mt-6 border-t border-line">
-                  {service.includes.map((item) => (
-                    <li
-                      key={item}
-                      className="border-b border-line py-3 text-sm leading-snug text-ink sm:text-base"
-                    >
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              )}
             </li>
           ))}
         </ul>
