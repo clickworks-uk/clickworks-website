@@ -62,7 +62,7 @@ export type TeamMember = {
  */
 export const TEAM: TeamMember[] = [
   { name: "Samandeep Singh", role: "Founder & CEO" },
-  { name: "Sahib Gill", role: "Co-Founder" },
+  { name: "Sahib Singh Gill", role: "Co-Founder" },
   { name: "Dilbagh Kooner", role: "Head of AI" },
   { name: "Raj Rehal", role: "Lead Graphic Designer" },
   { name: "To be announced" },
