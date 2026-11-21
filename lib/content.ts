@@ -150,7 +150,14 @@ export const SERVICE_SLIDES: ServiceSlide[] = [
   {
     label: "Digital Marketing",
     slug: "digital-marketing",
-    // No icon supplied yet; the cell shows a neutral slot until one is.
+    image: "/services/digital-marketing.png",
+  },
+  {
+    // "Optimisation" to match Search Engine Optimisation above and the rest
+    // of the site's British spelling.
+    label: "Generative Engine Optimisation",
+    slug: "generative-engine-optimisation",
+    image: "/services/geo.png",
   },
   {
     label: "Consultation",
