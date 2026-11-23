@@ -6,15 +6,13 @@ import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { Container } from "@/components/Container";
 import { Wordmark } from "@/components/Wordmark";
-import { CONTACT_HREF } from "@/lib/links";
+import { ENQUIRY_HREF } from "@/lib/links";
 import { clsx } from "@/lib/clsx";
 
 const NAV_LINKS = [
   { label: "About Us", href: "/about" },
   { label: "Projects", href: "/projects" },
   { label: "Services", href: "/services" },
-  { label: "Our Team", href: "/our-team" },
-  { label: "News", href: "/news" },
   { label: "Community", href: "/community" },
 ];
 
@@ -22,15 +20,11 @@ const NAV_LINKS = [
 const NAV_GROUPS = [
   {
     label: "Explore",
-    links: NAV_LINKS.filter((l) =>
-      ["Projects", "Services", "News"].includes(l.label),
-    ),
+    links: NAV_LINKS.filter((l) => ["Projects", "Services"].includes(l.label)),
   },
   {
     label: "Company",
-    links: NAV_LINKS.filter((l) =>
-      ["About Us", "Our Team", "Community"].includes(l.label),
-    ),
+    links: NAV_LINKS.filter((l) => ["About Us", "Community"].includes(l.label)),
   },
 ];
 
@@ -124,10 +118,9 @@ export function Navbar() {
         <div className="mx-auto w-full max-w-6xl px-5 sm:px-8">
           <nav
             aria-label="Main"
-            className="relative flex h-16 items-center justify-start gap-4 md:justify-center"
+            className="relative flex h-16 items-center justify-start gap-4 md:justify-between"
           >
-            {/* Logo, links and the CTA all read as one group */}
-            <div className="flex min-w-0 items-center gap-7">
+            {/* Wordmark alone on the left; links and the CTA sit opposite. */}
               <Link
                 href="/"
                 className={clsx(
@@ -143,7 +136,8 @@ export function Navbar() {
                 />
               </Link>
 
-              <ul className="hidden items-center gap-7 md:flex">
+            <div className="hidden min-w-0 items-center gap-7 md:flex">
+              <ul className="flex items-center gap-7">
                 {NAV_LINKS.map((link) => (
                   <li key={link.label}>
                     <Link
@@ -165,8 +159,8 @@ export function Navbar() {
               </ul>
 
               <a
-                href={CONTACT_HREF}
-                className="hidden rounded-full bg-accent px-5 py-2 text-sm font-semibold text-white shadow-soft transition-colors hover:bg-accent-strong md:inline-flex"
+                href={ENQUIRY_HREF}
+                className="inline-flex shrink-0 rounded-full bg-accent px-5 py-2 text-sm font-semibold text-white shadow-soft transition-colors hover:bg-accent-strong"
               >
                 Get Started
               </a>
@@ -194,7 +188,7 @@ export function Navbar() {
 
             {open && (
               <a
-                href={CONTACT_HREF}
+                href={ENQUIRY_HREF}
                 onClick={() => setOpen(false)}
                 className="motion-safe:animate-[nav-cta-in_300ms_var(--ease-out-soft)_both] absolute right-0 rounded-full bg-white px-5 py-2.5 text-sm font-semibold leading-5 text-ink shadow-soft transition-colors hover:bg-white/90 md:hidden"
               >
@@ -217,11 +211,15 @@ export function Navbar() {
         className={clsx(
           "fixed inset-0 z-40 overflow-y-auto md:hidden",
           "bg-black/75 backdrop-blur-2xl",
-          "transition-[opacity,translate,visibility] duration-300 ease-(--ease-out-soft)",
+          "transition-[opacity,translate,visibility] duration-[400ms] ease-(--ease-out-soft)",
           "motion-reduce:transition-none",
+          // The panel travels its own full height rather than nudging, so it
+          // reads as dropping down from behind the bar and retracting back up
+          // into it. Opacity stays at full through the slide: fading it out
+          // would hide the very movement that carries the gesture.
           open
             ? "visible translate-y-0 opacity-100"
-            : "invisible pointer-events-none -translate-y-2 opacity-0",
+            : "invisible pointer-events-none -translate-y-full opacity-0",
         )}
       >
         <Container className="pb-12 pt-[4.5rem]">
@@ -229,7 +227,7 @@ export function Navbar() {
             <section key={group.label} className="mt-6 first:mt-0">
               <h2
                 style={{
-                  transitionDelay: open ? `${90 + ++order * 45}ms` : "0ms",
+                  transitionDelay: open ? `${200 + ++order * 45}ms` : "0ms",
                 }}
                 className={clsx(
                   "px-2 pb-1 text-base font-medium text-white/40",
@@ -246,7 +244,7 @@ export function Navbar() {
                   <li
                     key={link.label}
                     style={{
-                      transitionDelay: open ? `${90 + ++order * 45}ms` : "0ms",
+                      transitionDelay: open ? `${200 + ++order * 45}ms` : "0ms",
                     }}
                     className={clsx(
                       "transition-[opacity,translate] duration-300 ease-(--ease-out-soft)",

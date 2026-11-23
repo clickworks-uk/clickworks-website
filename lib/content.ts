@@ -46,43 +46,6 @@ export const PROJECTS: Project[] = [
 ];
 
 
-export type NewsPost = {
-  title: string;
-  body: string;
-  /** Rendered as written, so the format stays under editorial control. */
-  date: string;
-  /** Cover photo. Drop the file in /public and reference it here. */
-  photo?: string;
-  /**
-   * Where "For more" points. Without one the label still shows but is not a
-   * link, so nothing on the page leads to a page that does not exist.
-   */
-  href?: string;
-};
-
-const PLACEHOLDER_BODY =
-  "Description Description Description Description Description Description " +
-  "Description Description Description Description Description Description " +
-  "Description Description";
-
-export const NEWS: NewsPost[] = [
-  {
-    title:
-      "The Clickworks Team go out with Midlands Langar Seva Society to feed the homeless",
-    body: PLACEHOLDER_BODY,
-    date: "Monday, 17 August 2021",
-  },
-  {
-    title: "Story title goes here",
-    body: PLACEHOLDER_BODY,
-    date: "Date to come",
-  },
-  {
-    title: "Story title goes here",
-    body: PLACEHOLDER_BODY,
-    date: "Date to come",
-  },
-];
 
 export type ServiceSlide = {
   /** Caption under the artwork. */

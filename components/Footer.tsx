@@ -17,7 +17,6 @@ const COLUMNS = [
     links: [
       { label: "About", href: "/about" },
       // Named as the nav names it, rather than "Core Team".
-      { label: "Our Team", href: "/our-team" },
       { label: "Community", href: "/community" },
       { label: "Contact", href: "/contact" },
     ],
@@ -42,7 +41,6 @@ const COLUMNS = [
     heading: "Explore",
     links: [
       { label: "Projects", href: "/projects" },
-      { label: "News", href: "/news" },
       { label: "Start an enquiry", href: "/enquiry" },
     ],
   },
