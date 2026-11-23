@@ -15,8 +15,12 @@ import { Footer } from "@/components/Footer";
 const BARE_ROUTES = ["/coming-soon"];
 
 function isBare(pathname: string | null) {
+  if (!pathname) return false;
+  // A static export serves "/coming-soon.html", so compare without the
+  // extension and without a trailing slash.
+  const path = pathname.replace(/\.html$/, "").replace(/\/$/, "") || "/";
   return BARE_ROUTES.some(
-    (route) => pathname === route || pathname?.startsWith(`${route}/`),
+    (route) => path === route || path.startsWith(`${route}/`),
   );
 }
 
