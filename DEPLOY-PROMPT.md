@@ -90,3 +90,56 @@ Check each of these and report what you actually saw:
 
 Do not edit any code to get the domain working. This task is DNS and Vercel
 settings only. If you think a code change is needed, stop and tell me why.
+
+---
+
+# Second prompt — deploy the coming-soon holding page
+
+A separate, much smaller job. Paste this into Cowork with Vercel open.
+
+---
+
+I want to deploy a holding page as its own Vercel project, separate from my
+main site.
+
+## What already exists
+
+- **GitHub repo:** `clickworks-uk/comingsoon`, branch **`main`**, already
+  pushed and ready. It contains `index.html`, a `README.md` and an `assets/`
+  folder (logo + font). Nothing else.
+- **My Vercel team:** **whitehawk-agency**
+
+## What I need you to do
+
+Create a new Vercel project from that repo, in the **whitehawk-agency** team.
+
+Settings, which matter because this is not a framework app:
+
+| Setting | Value |
+|---|---|
+| Framework Preset | **Other** |
+| Build Command | leave empty / override off |
+| Output Directory | leave empty / override off |
+| Install Command | leave empty / override off |
+| Root Directory | `./` (repo root) |
+| Environment Variables | none |
+
+It is a plain static `index.html` at the repo root. If you set a framework
+preset or a build command, the deploy will either fail or serve nothing —
+Vercel just needs to serve the files as they are.
+
+## Then
+
+1. Tell me the `.vercel.app` URL it gives me.
+2. Open that URL and confirm: the Clickworks logo in white on a dark blue
+   and magenta gradient, the words "Coming soon", a sentence under it, and
+   four social icons next to `@getclickworks`. It should fill one screen with
+   nothing to scroll.
+3. If it shows a Vercel login screen, tell me — my other project has Vercel
+   Authentication switched on and this new one may have inherited the team
+   default. For a public holding page I want that **off**, which is the
+   opposite of what I want on the main project, so check with me before
+   changing it.
+
+Do not edit the repo's code. If something looks wrong, tell me what you see
+and I will fix it on my side.
