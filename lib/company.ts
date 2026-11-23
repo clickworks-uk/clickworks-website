@@ -13,7 +13,7 @@ export const COMPANY = {
   /** Registered legal name, e.g. "Clickworks Ltd". */
   legalName: "",
   /** Companies House (or equivalent) registration number. */
-  registrationNumber: "",
+  registrationNumber: "17597304",
   /** Registered office, one line. */
   registeredAddress: "",
   /** VAT number, if registered. */
@@ -22,6 +22,12 @@ export const COMPANY = {
   contactEmail: "",
   /** Where GDPR/CCPA requests should go, if different from contactEmail. */
   privacyEmail: "",
+  /**
+   * The public register entry. Shown as a link on the company number, so the
+   * disclosure can be checked rather than just asserted.
+   */
+  companiesHouseUrl:
+    "https://find-and-update.company-information.service.gov.uk/company/17597304",
 } as const;
 
 /** Trading name, shown in the UI. Safe to display before the rest is filled. */

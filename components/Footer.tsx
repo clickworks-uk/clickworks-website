@@ -115,19 +115,28 @@ export function Footer() {
         {HAS_LEGAL_DETAILS && (
           <div className="mt-14 border-t border-line pt-8 text-sm leading-relaxed text-ink-muted">
             <h2 className="sr-only">Company details</h2>
-            {COMPANY.legalName && (
-              <p>
-                {COMPANY.legalName}
-                {COMPANY.registrationNumber && (
-                  <>
-                    {" "}
-                    &middot; Registered in England and Wales, company no.{" "}
-                    {COMPANY.registrationNumber}
-                  </>
-                )}
-                {COMPANY.vatNumber && <> &middot; VAT {COMPANY.vatNumber}</>}
-              </p>
-            )}
+            {/*
+              The parts are independent: the company number shows whether or
+              not the registered name has been filled in, rather than being
+              hidden behind it.
+            */}
+            <p>
+              {COMPANY.legalName && <>{COMPANY.legalName} &middot; </>}
+              Registered in England and Wales, company no.{" "}
+              {COMPANY.companiesHouseUrl ? (
+                <a
+                  href={COMPANY.companiesHouseUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline underline-offset-4 transition-colors hover:text-ink"
+                >
+                  {COMPANY.registrationNumber}
+                </a>
+              ) : (
+                COMPANY.registrationNumber
+              )}
+              {COMPANY.vatNumber && <> &middot; VAT {COMPANY.vatNumber}</>}
+            </p>
             {COMPANY.registeredAddress && (
               <address className="not-italic">
                 Registered office: {COMPANY.registeredAddress}

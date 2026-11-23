@@ -104,7 +104,12 @@ export function Navbar() {
             : "border-white/10 bg-black/85 backdrop-blur-md",
         )}
       >
-        <div className="mx-auto w-full max-w-6xl px-5 sm:px-8">
+        {/*
+          Full-bleed rather than inside the page container, so the wordmark
+          sits against the left edge of the window and the CTA against the
+          right, instead of both pulling in to the 72rem content column.
+        */}
+        <div className="w-full px-5 sm:px-8">
           <nav
             aria-label="Main"
             className="relative flex h-16 items-center justify-start gap-4 md:justify-between"
