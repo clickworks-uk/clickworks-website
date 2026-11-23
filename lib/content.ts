@@ -45,31 +45,6 @@ export const PROJECTS: Project[] = [
   },
 ];
 
-export type TeamMember = {
-  name: string;
-  /** Omitted on a seat that is not filled yet. */
-  role?: string;
-  /** Portrait. Drop the file in /public and reference it here. */
-  photo?: string;
-};
-
-/**
- * The core team, in the order they are shown.
- *
- * The last four are seats held open to match the reference row of eight.
- * Nobody is invented: swap each name and role in as they are confirmed, or
- * delete the entry and the row shortens to suit.
- */
-export const TEAM: TeamMember[] = [
-  { name: "Samandeep Singh", role: "Founder & CEO" },
-  { name: "Sahib Singh Gill", role: "Co-Founder" },
-  { name: "Dilbagh Kooner", role: "Head of AI" },
-  { name: "Raj Rehal", role: "Lead Graphic Designer" },
-  { name: "To be announced" },
-  { name: "To be announced" },
-  { name: "To be announced" },
-  { name: "To be announced" },
-];
 
 export type NewsPost = {
   title: string;
