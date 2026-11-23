@@ -16,17 +16,6 @@ const NAV_LINKS = [
   { label: "Community", href: "/community" },
 ];
 
-/** The phone sheet groups the same links under headings. */
-const NAV_GROUPS = [
-  {
-    label: "Explore",
-    links: NAV_LINKS.filter((l) => ["Projects", "Services"].includes(l.label)),
-  },
-  {
-    label: "Company",
-    links: NAV_LINKS.filter((l) => ["About Us", "Community"].includes(l.label)),
-  },
-];
 
 export function Navbar() {
   const pathname = usePathname();
@@ -123,10 +112,7 @@ export function Navbar() {
             {/* Wordmark alone on the left; links and the CTA sit opposite. */}
               <Link
                 href="/"
-                className={clsx(
-                  "shrink-0 text-2xl text-white md:text-xl",
-                  open && "hidden md:block",
-                )}
+                className="shrink-0 text-2xl text-white md:text-xl"
               >
                 <Wordmark
                   onDark
@@ -177,24 +163,13 @@ export function Navbar() {
               aria-controls="mobile-nav"
               aria-label={open ? "Close menu" : "Open menu"}
               className={clsx(
-                "inline-flex size-10 items-center justify-center rounded-full transition-colors md:hidden",
-                open
-                  ? "order-first -ml-2 text-white hover:bg-white/10"
-                  : "absolute right-0 text-white hover:bg-white/10",
+                "inline-flex size-10 items-center justify-center rounded-full md:hidden",
+                "absolute right-0 text-white transition-colors hover:bg-white/10",
               )}
             >
               {open ? <X className="size-6" /> : <Menu className="size-5" />}
             </button>
 
-            {open && (
-              <a
-                href={ENQUIRY_HREF}
-                onClick={() => setOpen(false)}
-                className="motion-safe:animate-[nav-cta-in_300ms_var(--ease-out-soft)_both] absolute right-0 rounded-full bg-white px-5 py-2.5 text-sm font-semibold leading-5 text-ink shadow-soft transition-colors hover:bg-white/90 md:hidden"
-              >
-                Get Started
-              </a>
-            )}
           </nav>
         </div>
       </header>
@@ -223,57 +198,51 @@ export function Navbar() {
         )}
       >
         <Container className="pb-12 pt-[4.5rem]">
-          {NAV_GROUPS.map((group) => (
-            <section key={group.label} className="mt-6 first:mt-0">
-              <h2
+          <a
+            href={ENQUIRY_HREF}
+            onClick={() => setOpen(false)}
+            tabIndex={open ? undefined : -1}
+            style={{ transitionDelay: open ? "200ms" : "0ms" }}
+            className={clsx(
+              "mb-6 flex w-full items-center justify-center rounded-full bg-white",
+              "px-5 py-3.5 text-base font-semibold text-ink shadow-soft",
+              "transition-[opacity,translate,background-color] duration-300 ease-(--ease-out-soft)",
+              "motion-reduce:transition-none hover:bg-white/90",
+              open ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0",
+            )}
+          >
+            Get Started
+          </a>
+
+          <ul className="flex flex-col">
+            {NAV_LINKS.map((link) => (
+              <li
+                key={link.label}
                 style={{
                   transitionDelay: open ? `${200 + ++order * 45}ms` : "0ms",
                 }}
                 className={clsx(
-                  "px-2 pb-1 text-base font-medium text-white/40",
                   "transition-[opacity,translate] duration-300 ease-(--ease-out-soft)",
                   "motion-reduce:transition-none",
                   open ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0",
                 )}
               >
-                {group.label}
-              </h2>
-
-              <ul className="flex flex-col">
-                {group.links.map((link) => (
-                  <li
-                    key={link.label}
-                    style={{
-                      transitionDelay: open ? `${200 + ++order * 45}ms` : "0ms",
-                    }}
-                    className={clsx(
-                      "transition-[opacity,translate] duration-300 ease-(--ease-out-soft)",
-                      "motion-reduce:transition-none",
-                      open
-                        ? "translate-y-0 opacity-100"
-                        : "translate-y-3 opacity-0",
-                    )}
-                  >
-                    <Link
-                      href={link.href}
-                      onClick={() => setOpen(false)}
-                      tabIndex={open ? undefined : -1}
-                      aria-current={
-                        pathname === link.href ? "page" : undefined
-                      }
-                      className={clsx(
-                        "block rounded-xl px-2 py-3 text-xl font-medium",
-                        "transition-colors hover:bg-white/10",
-                        pathname === link.href ? "text-white" : "text-white/70",
-                      )}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ))}
+                <Link
+                  href={link.href}
+                  onClick={() => setOpen(false)}
+                  tabIndex={open ? undefined : -1}
+                  aria-current={pathname === link.href ? "page" : undefined}
+                  className={clsx(
+                    "block rounded-xl px-2 py-4 text-2xl font-medium text-white",
+                    "transition-colors hover:bg-white/10",
+                    pathname === link.href && "underline decoration-white/40 underline-offset-8",
+                  )}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </Container>
       </div>
     </>
