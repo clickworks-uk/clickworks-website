@@ -1,109 +1,76 @@
-# Connect getclickworks.com to the holding page
+# Fix the DNS for getclickworks.com at IONOS
 
-Paste the section below into Claude Cowork with Vercel and IONOS open.
-
-Everything else is already done: both Vercel projects exist and both have a
-READY production deployment. This is DNS and Vercel settings only.
+Paste everything below the line into Claude Cowork, with IONOS open.
 
 ---
 
-I want to point my domain **getclickworks.com** at a Vercel project. Work
-through this with me and pause whenever you need me to click something or
-read a value back to you.
+My domain **getclickworks.com** is attached to a Vercel project and Vercel has
+verified ownership, but the DNS at IONOS was never pointed at Vercel, so the
+domain does not serve my site. Vercel reports `misconfigured: true` for both
+`getclickworks.com` and `www.getclickworks.com`.
 
-## What already exists — do not recreate any of it
+This is a DNS job at IONOS only. **Nothing needs changing in Vercel** — the
+domains are already added there and set up the way I want.
 
-- **Vercel team:** the only team on my account. The API reports it as
-  *"Whitehawk Agency's projects"*; the dashboard may show it as
-  **clickworks-uk** after a rename. Same team either way. Its ID, which does
-  not change on rename, is `team_A9qQ1aNWCkCvt37S28lOx60i`.
-- **Target project:** **`comingsoon`** — id `prj_4KPjCJ4RQv2V7meJhMVN0DZp5xNA`,
-  repo `clickworks-uk/comingsoon`, branch `main`. Latest production
-  deployment is READY. It is a static `index.html`; the framework preset is
-  correctly **Other** with no build command. Leave all of that alone.
-- **Not the target, for now:** `clickworks-website` is the full site. It is
-  deployed and working, but I want the domain on the holding page first.
-- **Environment variables:** none on either project, and none are needed.
+## What Vercel currently sees
 
-## The one setting that will look like a fault and is not
+| Host | What is there now | What it should be |
+|---|---|---|
+| `getclickworks.com` (apex) | `A` → `217.160.0.129` — an **IONOS** IP, wrong | `A` → `216.198.79.1` |
+| `www.getclickworks.com` | **nothing at all** | `CNAME` → `6957331ae5058a2f.vercel-dns-017.com.` |
 
-`comingsoon` has **Vercel Authentication** on, set to
-*"all except custom domains"*. That is why `comingsoon-virid-zeta.vercel.app`
-asks for a Vercel login.
+Nameservers are already IONOS (`ns1089.ui-dns.org`, `ns1103.ui-dns.biz`,
+`ns1109.ui-dns.com`, `ns1080.ui-dns.de`). Those are correct — do not change
+them, and do not switch the domain to Vercel's nameservers.
 
-Leave it exactly as it is. Once `getclickworks.com` is attached, that domain
-serves the page publicly while the `.vercel.app` URLs stay behind the login —
-which is what I want. **Do not turn Vercel Authentication off.** If the custom
-domain still shows a login screen *after* it verifies, tell me and we will
-look at it together.
+## What to do
 
-## The job
+Go to IONOS → **Domains & SSL → getclickworks.com → DNS**.
 
-1. Vercel, project **`comingsoon`**, **Settings → Domains**.
-2. Add **`getclickworks.com`** and **`www.getclickworks.com`**.
-3. Vercel will then show the exact DNS records it wants. **Read them off the
-   screen and tell me the actual values before touching IONOS.** Do not use
-   an IP address or CNAME target from memory or from a blog post — Vercel's
-   published targets change, and a stale value fails silently: the domain
-   looks configured and simply never verifies.
-   - Expect an **A record** for the apex and a **CNAME** for `www`. If Vercel
-     shows something different, follow Vercel, not this note.
-4. IONOS, **Domains & SSL → getclickworks.com → DNS**.
-   - First, show me every record already there. IONOS ships domains with
-     parking-page records, and a leftover `A` or `CNAME` on the same host
-     will conflict with Vercel's. List anything you plan to delete before
-     you delete it.
-   - IONOS does not allow a CNAME on the apex, so the apex must use the A
-     record Vercel specified.
-   - Leave MX records alone. Deleting those kills email on the domain.
-5. Back in Vercel, wait for both entries to read **Valid Configuration**.
-   This can take minutes or hours. If it has not verified within about 30
-   minutes, tell me rather than editing records again — re-editing
-   mid-propagation makes it much harder to diagnose.
-6. Confirm Vercel has issued the **SSL certificate** for both names.
-7. Ask me which address I want canonical — `getclickworks.com` or
-   `www.getclickworks.com` — and set the other to redirect to it in Vercel's
-   Domains panel.
+1. **Show me every record currently on the domain before changing anything.**
+   I want to see the list first.
+2. **Replace** the apex `A` record. Delete the one pointing at
+   `217.160.0.129` and add `A` with host `@` (or blank, as IONOS labels the
+   root) pointing at **`216.198.79.1`**.
+   - Replace it, do not add a second A record alongside. Two A records on the
+     apex means traffic goes to whichever answers, and the site will work
+     only some of the time.
+3. **Add** a `CNAME` for host `www` pointing at
+   **`6957331ae5058a2f.vercel-dns-017.com.`** (keep the trailing dot if IONOS
+   accepts one; drop it if IONOS rejects it).
+   - If a `www` record already exists in any form, replace it.
+4. **Do not touch the MX records.** Deleting those kills email on the domain.
+   Same for any `TXT` records — leave them alone unless I say otherwise.
+5. Tell me exactly what you changed: what you deleted, what you added.
 
-## Verify rather than assume
+## If IONOS will not accept those values
 
-Report what you actually saw for each:
+Some IONOS panels only offer a short preset list, or reject a CNAME target
+with a trailing dot. If either value is refused, tell me what the error says
+rather than substituting something that looks close. Vercel also accepts
+these older fallbacks, which still work:
 
-- `https://getclickworks.com` loads over HTTPS, no certificate warning, and
-  **no Vercel login screen**
-- `https://www.getclickworks.com` redirects to the canonical one, or the
-  other way round
-- `http://getclickworks.com` redirects to `https://`
-- The page shows the Clickworks logo in white on a dark blue-and-magenta
-  gradient, the words "Coming soon", one sentence, and four social icons
-  beside `@getclickworks`
-- It fills one screen with nothing to scroll, and nothing is cut off in a
-  phone-width window
+- apex `A` → `76.76.21.21`
+- `www` `CNAME` → `cname.vercel-dns.com.`
 
-Do not edit any code. If you think a code change is needed, stop and tell me
-why.
+Use a fallback only if the first value is genuinely rejected, and tell me
+which one you used.
 
----
+## Then
 
-# Later: switching the domain to the full site
+DNS changes take anywhere from a few minutes to a couple of hours to
+propagate. Once you have saved the records:
 
-When the real site is ready this is the whole job, and it needs **no DNS
-changes**, because the records already point at Vercel:
-
-1. Vercel, `comingsoon`, Settings → Domains → **remove** `getclickworks.com`
-   and `www.getclickworks.com`.
-2. Vercel, `clickworks-website`, Settings → Domains → **add** the same two.
-3. Re-set the apex/www redirect and wait for the certificate to reissue.
-
-Order matters: a domain can sit on only one project at a time, so it has to
-come off `comingsoon` first. The domain will 404 for a minute or two between
-the two steps.
-
-Two things to do on `clickworks-website` before that switch:
-
-- Set `FORM_ENDPOINT` in `lib/company.ts`, or the enquiry form stays
-  disabled. Turning it on starts collecting personal data, so the privacy
-  policy needs a line covering what is collected, why, and for how long.
-- Fill in the company registration number, registered address and contact
-  email in `lib/company.ts`. They are intentionally empty, so the footer's
-  business-details block stays hidden until they are set.
+1. Tell me they are saved and what the final record list looks like.
+2. Do not keep re-editing while waiting — if it has not come good after about
+   30 minutes, tell me, and we will look at it together. Re-editing
+   mid-propagation makes it much harder to work out what is wrong.
+3. If you can, check `https://www.getclickworks.com` after 10 minutes or so
+   and tell me what it shows. I am expecting: a white "clickworks" logo on a
+   dark blue and magenta gradient, the words "Coming soon", a sentence under
+   it, and four social icons. If you see an IONOS parking page instead, DNS
+   has not propagated yet — that is expected early on, not a failure.
+4. `getclickworks.com` without the `www` should end up redirecting to
+   `www.getclickworks.com`. That redirect happens at Vercel, not IONOS, so do
+   not add a redirect or forwarding rule at IONOS — IONOS forwarding would
+   conflict with the A record and break it.
