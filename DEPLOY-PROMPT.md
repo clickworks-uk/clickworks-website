@@ -11,9 +11,16 @@ pausing whenever you need me to click something or read a value back to you.
 
 ## What already exists — do not recreate any of it
 
-- **Vercel project:** `clickworks-website`, under the team **whitehawk-agency**
+- **Vercel project:** `clickworks-website`. In the Vercel API it sits under
+  the team **"Whitehawk Agency's projects"** (slug `whitehawk-agency-s-projects`,
+  id `team_A9qQ1aNWCkCvt37S28lOx60i`). If the dashboard shows that team as
+  **clickworks-uk** instead, it is the same team renamed — use whatever the
+  dashboard shows and tell me what it is called.
 - **Project ID:** `prj_hC8tWpyHmeAZIOI5BMUsr27lNM8o`
-- **Connected repo:** `whitehawk-agency/clickworks-website` (GitHub)
+- **Connected repo:** `clickworks-website` on GitHub, in the **clickworks-uk**
+  org. The git remote still points at the old `whitehawk-agency` path, which
+  GitHub redirects, so Vercel may show either owner. Do not reconnect the repo
+  to "fix" this — it is already deploying.
 - **Production branch:** `claude/ecstatic-mayer-4c4j69` — this is the repo's
   default branch, so every push to it deploys to production automatically
 - **Framework preset:** Next.js · **Node:** 24.x · **Build command:** default
@@ -107,11 +114,16 @@ main site.
 - **GitHub repo:** `clickworks-uk/comingsoon`, branch **`main`**, already
   pushed and ready. It contains `index.html`, a `README.md` and an `assets/`
   folder (logo + font). Nothing else.
-- **My Vercel team:** **whitehawk-agency**
+- **My Vercel team:** the only team on my account. The API reports it as
+  **"Whitehawk Agency's projects"**; the dashboard may show it as
+  **clickworks-uk** after a rename. Either way it is the same single team —
+  use the one you can see, and put the new project in it alongside
+  `clickworks-website`.
 
 ## What I need you to do
 
-Create a new Vercel project from that repo, in the **whitehawk-agency** team.
+Create a new Vercel project from that repo, in that team — the same one that
+already holds `clickworks-website`.
 
 Settings, which matter because this is not a framework app:
 
