@@ -10,8 +10,8 @@
  * rather than shipped as a placeholder that reads as fact.
  */
 export const COMPANY = {
-  /** Registered legal name, e.g. "Clickworks Ltd". */
-  legalName: "",
+  /** Registered legal name, as it appears on the register. */
+  legalName: "CLICKWORKS LTD",
   /** Companies House (or equivalent) registration number. */
   registrationNumber: "17597304",
   /** Registered office, one line. */

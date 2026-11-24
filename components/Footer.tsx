@@ -159,8 +159,12 @@ export function Footer() {
           <p className="order-2 text-sm text-ink-muted sm:order-1 sm:flex-1" />
 
           <p className="order-1 text-sm text-ink-muted sm:order-2">
-            © {new Date().getFullYear()} {COMPANY.legalName || TRADING_NAME}.
-            All rights reserved.
+            {/*
+              The trading name here, not the registered one. The register's
+              all-caps form belongs in the statutory line above; shouting it
+              again in the copyright reads as a mistake.
+            */}
+            © {new Date().getFullYear()} {TRADING_NAME}. All rights reserved.
           </p>
 
           <div className="order-3 flex items-center gap-4 sm:flex-1 sm:justify-end">
