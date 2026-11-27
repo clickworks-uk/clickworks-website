@@ -3,24 +3,23 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 import { Container } from "@/components/Container";
 import { Wordmark } from "@/components/Wordmark";
+import { NavDropdown } from "@/components/NavDropdown";
 import { ENQUIRY_HREF } from "@/lib/links";
+import { NAV_LINKS } from "@/lib/nav";
 import { clsx } from "@/lib/clsx";
-
-const NAV_LINKS = [
-  { label: "About Us", href: "/about" },
-  { label: "Projects", href: "/projects" },
-  { label: "Services", href: "/services" },
-  { label: "Community", href: "/community" },
-];
 
 
 export function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [retracted, setRetracted] = useState(false);
+  /** Which desktop nav item is showing its dropdown, by label. */
+  const [menu, setMenu] = useState<string | null>(null);
+  /** Which mobile nav item is expanded, by label. */
+  const [expanded, setExpanded] = useState<string | null>(null);
   const lastY = useRef(0);
   const idle = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
@@ -63,10 +62,16 @@ export function Navbar() {
     };
   }, []);
 
-  // A route change closes the sheet behind it.
+  // A route change closes the sheet, and any menu, behind it.
   useEffect(() => {
     setOpen(false);
+    setMenu(null);
   }, [pathname]);
+
+  // The mobile sheet reopens with its sections collapsed.
+  useEffect(() => {
+    if (!open) setExpanded(null);
+  }, [open]);
 
   // The menu cannot be open behind a retracted bar.
   useEffect(() => {
@@ -130,21 +135,83 @@ export function Navbar() {
             <div className="hidden min-w-0 items-center gap-7 md:flex">
               <ul className="flex items-center gap-7">
                 {NAV_LINKS.map((link) => (
-                  <li key={link.label}>
+                  /*
+                    Each item is the full height of the bar so that its
+                    dropdown starts flush against the bar's bottom edge. With
+                    no gap between trigger and panel the pointer never leaves
+                    the item on the way down, so the menu cannot flicker shut
+                    mid-travel.
+
+                    Focus opens it too: onFocus/onBlur here are React's
+                    focusin/focusout, so they fire for anything inside the
+                    item, including the panel's own links. That is what lets
+                    the menu be reached by keyboard without a second control
+                    beside the link.
+                  */
+                  <li
+                    key={link.label}
+                    className="relative flex h-16 items-center"
+                    onMouseEnter={
+                      link.menu ? () => setMenu(link.label) : undefined
+                    }
+                    onMouseLeave={link.menu ? () => setMenu(null) : undefined}
+                    onFocus={link.menu ? () => setMenu(link.label) : undefined}
+                    onBlur={
+                      link.menu
+                        ? (event) => {
+                            if (
+                              !event.currentTarget.contains(
+                                event.relatedTarget as Node | null,
+                              )
+                            ) {
+                              setMenu(null);
+                            }
+                          }
+                        : undefined
+                    }
+                    onKeyDown={
+                      link.menu
+                        ? (event) => {
+                            if (event.key === "Escape") setMenu(null);
+                          }
+                        : undefined
+                    }
+                  >
                     <Link
                       href={link.href}
                       aria-current={
                         pathname === link.href ? "page" : undefined
                       }
                       className={clsx(
-                        "whitespace-nowrap text-sm font-medium transition-colors",
+                        "flex items-center gap-1.5 whitespace-nowrap text-sm font-medium transition-colors",
                         pathname === link.href
                           ? "text-white underline decoration-white/40 underline-offset-8"
                           : "text-white hover:text-white/70",
                       )}
                     >
                       {link.label}
+                      {link.menu && (
+                        <ChevronDown
+                          aria-hidden="true"
+                          className={clsx(
+                            "size-3.5",
+                            "transition-transform duration-200 ease-(--ease-out-soft)",
+                            "motion-reduce:transition-none",
+                            menu === link.label && "rotate-180",
+                          )}
+                        />
+                      )}
                     </Link>
+
+                    {link.menu && (
+                      <NavDropdown
+                        items={link.menu}
+                        open={menu === link.label}
+                        allHref={link.href}
+                        allLabel={link.menuAll ?? `See all ${link.label}`}
+                        onNavigate={() => setMenu(null)}
+                      />
+                    )}
                   </li>
                 ))}
               </ul>
@@ -232,19 +299,102 @@ export function Navbar() {
                   open ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0",
                 )}
               >
-                <Link
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  tabIndex={open ? undefined : -1}
-                  aria-current={pathname === link.href ? "page" : undefined}
-                  className={clsx(
-                    "block rounded-xl px-2 py-4 text-2xl font-medium text-white",
-                    "transition-colors hover:bg-white/10",
-                    pathname === link.href && "underline decoration-white/40 underline-offset-8",
-                  )}
-                >
-                  {link.label}
-                </Link>
+                {link.menu ? (
+                  /*
+                    No hover on a touch screen, so the phone version is a
+                    disclosure instead: tapping the row opens the list with
+                    every description already showing.
+                  */
+                  <>
+                    <button
+                      type="button"
+                      tabIndex={open ? undefined : -1}
+                      aria-expanded={expanded === link.label}
+                      aria-controls={`nav-section-${link.href.slice(1)}`}
+                      onClick={() =>
+                        setExpanded((value) =>
+                          value === link.label ? null : link.label,
+                        )
+                      }
+                      className={clsx(
+                        "flex w-full items-center justify-between rounded-xl px-2 py-4",
+                        "text-2xl font-medium text-white transition-colors hover:bg-white/10",
+                      )}
+                    >
+                      {link.label}
+                      <ChevronDown
+                        aria-hidden="true"
+                        className={clsx(
+                          "size-5 shrink-0",
+                          "transition-transform duration-200 ease-(--ease-out-soft)",
+                          "motion-reduce:transition-none",
+                          expanded === link.label && "rotate-180",
+                        )}
+                      />
+                    </button>
+
+                    {expanded === link.label && (
+                      <ul
+                        id={`nav-section-${link.href.slice(1)}`}
+                        className="mb-3 flex flex-col border-l border-white/15 pl-4"
+                      >
+                        {link.menu.map((item) => (
+                          <li key={item.label}>
+                            <Link
+                              href={item.href}
+                              onClick={() => setOpen(false)}
+                              tabIndex={open ? undefined : -1}
+                              className="flex items-start gap-4 px-2 py-3 transition-colors hover:bg-white/10"
+                            >
+                              <span className="min-w-0">
+                                <span className="block text-base font-medium text-white">
+                                  {item.label}
+                                </span>
+                                <span className="mt-1 block text-sm leading-snug text-white/60">
+                                  {item.description}
+                                </span>
+                              </span>
+                              <ArrowRight
+                                aria-hidden="true"
+                                className="mt-1 size-4 shrink-0 text-white/50"
+                              />
+                            </Link>
+                          </li>
+                        ))}
+
+                        <li>
+                          <Link
+                            href={link.href}
+                            onClick={() => setOpen(false)}
+                            tabIndex={open ? undefined : -1}
+                            aria-current={
+                              pathname === link.href ? "page" : undefined
+                            }
+                            className="inline-flex items-center gap-2 px-2 py-3 text-base font-medium text-white underline decoration-white/30 underline-offset-8"
+                          >
+                            {link.menuAll ?? `See all ${link.label}`}
+                            <ArrowRight aria-hidden="true" className="size-4" />
+                          </Link>
+                        </li>
+                      </ul>
+                    )}
+                  </>
+                ) : (
+                  <Link
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    tabIndex={open ? undefined : -1}
+                    aria-current={pathname === link.href ? "page" : undefined}
+                    className={clsx(
+                      "block rounded-xl px-2 py-4 text-2xl font-medium text-white",
+                      "transition-colors hover:bg-white/10",
+                      pathname === link.href &&
+                        "underline decoration-white/40 underline-offset-8",
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>
