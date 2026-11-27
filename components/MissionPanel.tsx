@@ -158,17 +158,11 @@ export function MissionPanel() {
 
           <div className="relative flex h-full flex-col items-center justify-center px-6 text-center sm:px-10">
             <h2 className="max-w-[16ch] text-balance text-2xl font-semibold leading-[1.15] tracking-tight text-white sm:text-3xl lg:text-4xl">
-              Artificial marketing is broken
+              Artificial marketing is broken &amp; failing us
             </h2>
-            {/*
-              Deliberately not anti-AI: Clickworks sells Generative Engine
-              Optimisation and has a head of AI. The argument is about
-              marketing with nobody behind it, not about the tools.
-            */}
             <p className="mt-4 max-w-[42ch] text-balance text-sm font-medium leading-snug text-white/55 sm:mt-6 sm:text-base">
-              Generated posts, templated campaigns, a feed nobody actually
-              wrote. We use the same tools &mdash; the difference is that
-              real people decide what is worth saying.
+              We&rsquo;re rebuilding trust with you by making growth
+              continuous, personalised, and available 24/7.
             </p>
             <a
               href="/about"
