@@ -30,6 +30,30 @@ type RingCard = {
   src?: string;
 };
 
+/*
+  The ring's photo pool. Cards cycle through it, so no two neighbours on the
+  ring carry the same picture — RING is ordered by angle, and six photos
+  across twenty cards puts six places between any repeat.
+
+  The imagery is deliberately generic: stock-photo office meetings, flat lays,
+  gym shots. The panel's argument is that artificial marketing is broken, and
+  the ring is that marketing — the wall of interchangeable content the
+  headline is about. Anything distinctive here would undercut the point.
+
+  These are AI-generated. That is on purpose rather than a shortcut: the ring
+  is meant to be the interchangeable machine-made content the headline is
+  about. Swap in real photography by dropping files in /public/mission and
+  editing this list.
+*/
+const PHOTOS = [
+  "/mission/office.webp",
+  "/mission/flatlay-beauty.webp",
+  "/mission/gym.webp",
+  "/mission/handshake.webp",
+  "/mission/flatlay-coffee.webp",
+  "/mission/phone.webp",
+];
+
 const RING: RingCard[] = [
   { a: 208, r: 1.02, w: 11, ar: "3/4", tilt: -14, from: "#4d2921", to: "#190d0c" },
   { a: 218, r: 0.86, w: 9, ar: "4/5", tilt: 9, from: "#213537", to: "#0e1617" },
@@ -72,6 +96,8 @@ export function MissionPanel() {
               // Deterministic spread, so no two neighbours move in step.
               const dur = 14 + (i % 7) * 1.7;
               const delay = ((i * 0.83) % 9).toFixed(2);
+              // A card's own `src` wins; otherwise it takes its turn in the pool.
+              const photo = c.src ?? PHOTOS[i % PHOTOS.length];
               return (
                 <div
                   key={i}
@@ -96,18 +122,18 @@ export function MissionPanel() {
                       animation: `card-drift ${dur}s ease-in-out ${delay}s infinite, card-breathe ${(dur * 1.35).toFixed(1)}s ease-in-out ${delay}s infinite`,
                     }}
                   >
-                    {c.src && (
+                    {photo && (
                       /*
                         Knocked back so the ring stays a dark halo: at full
                         brightness twenty photos fight the headline sitting
                         in the middle of them.
                       */
                       <Image
-                        src={c.src}
+                        src={photo}
                         alt=""
                         fill
                         sizes="(max-width: 640px) 28vw, 12vw"
-                        className="object-cover opacity-85 saturate-[0.8] brightness-[0.78]"
+                        className="object-cover opacity-85 saturate-[0.8] brightness-[0.62] sm:brightness-[0.78]"
                       />
                     )}
                   </div>
