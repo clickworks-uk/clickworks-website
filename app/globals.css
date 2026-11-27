@@ -191,15 +191,6 @@
   }
 }
 
-@keyframes card-breathe {
-  0%,
-  100% {
-    opacity: 0.58;
-  }
-  50% {
-    opacity: 1;
-  }
-}
 
 /* The ring as a whole rocks a couple of degrees, which ties the cards together
    without swinging any of them off the panel the way a full turn would. */

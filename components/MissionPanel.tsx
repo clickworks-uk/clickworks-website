@@ -113,13 +113,20 @@ export function MissionPanel() {
                     The shell owns placement and the face owns motion: a CSS
                     animation on transform would otherwise replace the
                     translate/rotate that puts the card on the ring.
+
+                    The cards drift but do not pulse. They used to also run a
+                    "breathe" animation cycling opacity between 0.58 and 1,
+                    each on its own clock. Behind flat gradients that read as
+                    a shimmer; behind photographs it read as the pictures
+                    repeatedly darkening, so it is gone. Every card now holds
+                    one appearance the whole time.
                   */}
                   <div
                     className="ring-card relative w-full overflow-hidden rounded-[3px] shadow-[0_8px_24px_rgba(0,0,0,0.55)] will-change-[transform,opacity] sm:rounded-[5px]"
                     style={{
                       aspectRatio: c.ar,
                       backgroundImage: `linear-gradient(145deg, ${c.from}, ${c.to})`,
-                      animation: `card-drift ${dur}s ease-in-out ${delay}s infinite, card-breathe ${(dur * 1.35).toFixed(1)}s ease-in-out ${delay}s infinite`,
+                      animation: `card-drift ${dur}s ease-in-out ${delay}s infinite`,
                     }}
                   >
                     {photo && (
