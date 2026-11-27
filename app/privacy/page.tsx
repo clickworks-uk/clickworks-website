@@ -9,10 +9,15 @@ export const metadata: Metadata = {
 };
 
 /*
-  Written against what this site actually does today: no forms, no analytics,
-  no cookies set by us. If that changes — a waitlist form, a pixel, an
-  embedded player — the "What we collect" and "Cookies" sections must be
+  Written against what this site actually does today: an enquiry form, no
+  analytics, no cookies set by us. If that changes — a pixel, an embedded
+  player, a newsletter — the "What we collect" and "Cookies" sections must be
   updated in the same change, and TRACKING_ENABLED flipped in lib/company.ts.
+
+  The enquiry form posts to app/api/enquiry, which emails the submission on
+  through Resend and stores nothing itself. If that route ever starts writing
+  to a database, a CRM or a spreadsheet, say so here in the same commit:
+  "we do not keep a separate record" stops being true the moment it does.
 
   This is a working draft, not legal advice. Have a solicitor review it before
   relying on it.
@@ -25,9 +30,15 @@ export default function PrivacyPage() {
     >
       <LegalSection heading="What we collect">
         <p>
-          This website has no sign-up, contact or waitlist form, sets no
-          analytics and places no cookies of its own. If you simply read these
-          pages, we do not collect personal data from you.
+          This website sets no analytics and places no cookies of its own. If
+          you simply read these pages, we do not collect personal data from
+          you.
+        </p>
+        <p>
+          If you send an enquiry, we collect what you type into the form: your
+          name, your email address, the service you picked, your company name
+          if you give one, and your message. We need the name, the email
+          address and the message to reply; the rest is optional.
         </p>
         <p>
           Our hosting provider records standard server logs for every request —
@@ -44,9 +55,9 @@ export default function PrivacyPage() {
       <LegalSection heading="Why we are allowed to hold it">
         <p>
           Server logs rest on our legitimate interest in keeping the site
-          available and secure. Email correspondence rests on our legitimate
-          interest in replying to you, or on steps taken at your request before
-          entering a contract.
+          available and secure. Enquiries and email correspondence rest on
+          steps taken at your request before entering a contract, or on our
+          legitimate interest in replying to you.
         </p>
       </LegalSection>
 
@@ -61,7 +72,19 @@ export default function PrivacyPage() {
       <LegalSection heading="Sharing">
         <p>
           We do not sell personal data, and we do not share it for advertising.
-          Data is processed by our hosting provider purely to deliver the site.
+          Data is processed by our hosting provider purely to deliver the site,
+          and enquiries are passed through Resend, our email provider, purely
+          to deliver them to our inbox.
+        </p>
+      </LegalSection>
+
+      <LegalSection heading="How long we keep it">
+        <p>
+          An enquiry arrives as an email and is kept in our inbox for as long
+          as we need it to answer you and to keep a record of the
+          correspondence, and no longer than three years after our last
+          contact. We do not keep a separate record of form submissions
+          anywhere else. Ask us to delete yours sooner and we will.
         </p>
       </LegalSection>
 

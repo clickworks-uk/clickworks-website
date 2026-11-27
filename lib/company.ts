@@ -19,7 +19,7 @@ export const COMPANY = {
   /** VAT number, if registered. */
   vatNumber: "",
   /** General enquiries. Also the address for privacy requests below. */
-  contactEmail: "",
+  contactEmail: "info@getclickworks.com",
   /** Where GDPR/CCPA requests should go, if different from contactEmail. */
   privacyEmail: "",
   /**
@@ -83,15 +83,14 @@ export const HAS_LEGAL_DETAILS = Boolean(
 export const PRIVACY_CONTACT = COMPANY.privacyEmail || COMPANY.contactEmail;
 
 /**
- * Where the enquiry form posts. Empty until there is somewhere for
- * submissions to go — a form backend (Formspree, Basin, Formcarry) or your
- * own endpoint. While it is empty the form renders but will not submit,
- * because silently dropping an enquiry is worse than saying so.
+ * Where the enquiry form posts: our own route, which emails the submission to
+ * COMPANY.contactEmail through Resend. See app/api/enquiry/route.ts for the
+ * environment variables it needs.
  *
- * Setting this starts collecting personal data, so the privacy policy needs
- * a line covering it: what is collected, why, and how long it is kept.
+ * This collects personal data, so the privacy policy covers it — "What we
+ * collect" and "How long we keep it". Change one and change the other.
  */
-export const FORM_ENDPOINT = "";
+export const FORM_ENDPOINT = "/api/enquiry";
 
 /** Review date shown on the policy pages. */
 export const POLICY_UPDATED = "2 November 2026";
