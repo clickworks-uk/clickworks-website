@@ -6,43 +6,29 @@
 
 export type Project = {
   client: string;
-  discipline: string;
-  summary: string;
+  /**
+   * What the work was — "Website", "Branding", "Social Media". Optional
+   * because the client names landed before the detail did; the card leaves
+   * the line out rather than guessing at it.
+   */
+  discipline?: string;
+  /** One line on what was built and what it was for. Optional, as above. */
+  summary?: string;
   /** Cover photo. Drop the file in /public and reference it here. */
   photo?: string;
 };
 
+/*
+  Real clients. Each needs a discipline and a one-line summary before the
+  cards read as finished — the card renders the name alone until they are
+  filled in, which is deliberate: an invented summary on a real client's
+  name is worse than a sparse card.
+*/
 export const PROJECTS: Project[] = [
-  {
-    client: "Northwind Coffee",
-    discipline: "Website",
-    summary: "A new ordering flow built around repeat customers.",
-  },
-  {
-    client: "Halo Fitness",
-    discipline: "Social Media",
-    summary: "A class-led content engine running across three channels.",
-  },
-  {
-    client: "Meridian Dental",
-    discipline: "Branding",
-    summary: "An identity that reads as care rather than clinic.",
-  },
-  {
-    client: "Fern & Oak",
-    discipline: "Website",
-    summary: "A storefront rebuilt for the way the range actually sells.",
-  },
-  {
-    client: "Studio Verve",
-    discipline: "Branding",
-    summary: "A studio mark and system that scales past the founder.",
-  },
-  {
-    client: "Harbour & Co",
-    discipline: "Social Media",
-    summary: "A local audience grown from the harbour out.",
-  },
+  { client: "URprint" },
+  { client: "Jatt Life" },
+  { client: "Affitto Properties" },
+  { client: "BBC Asian Network" },
 ];
 
 
@@ -136,6 +122,13 @@ export const SERVICE_SLIDES: ServiceSlide[] = [
     description:
       "Artwork, assets and print that carry the brand everywhere it appears.",
     image: "/services/tag.png",
+  },
+  {
+    label: "Cyber Security",
+    slug: "cyber-security",
+    description:
+      "Finding the holes in your systems before somebody else does.",
+    image: "/services/cyber-security.png",
   },
   {
     label: "Software Development",

@@ -7,11 +7,10 @@ import { PROJECTS } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Projects — Clickworks",
-  description: "Work shipped for clients across automotive, QSR and retail.",
+  description: "Selected work from Clickworks.",
 };
 
-/** Three to a row, so the page shows one rank of three landscape tiles. */
-const SHOWN = PROJECTS.slice(0, 3);
+
 
 export default function ProjectsPage() {
   return (
@@ -22,8 +21,12 @@ export default function ProjectsPage() {
       />
 
       <Container>
-        <ul className="grid gap-6 sm:grid-cols-3 sm:gap-7">
-          {SHOWN.map((project) => (
+        {/*
+          Two across rather than four: these are landscape tiles, and four in
+          a row leaves each one too small to show anything.
+        */}
+        <ul className="grid gap-6 sm:grid-cols-2 sm:gap-7">
+          {PROJECTS.map((project) => (
             <li key={project.client}>
               <article className="group">
                 <PhotoSlot
@@ -33,12 +36,16 @@ export default function ProjectsPage() {
                 <h2 className="mt-4 text-base font-semibold tracking-tight text-ink sm:text-lg">
                   {project.client}
                 </h2>
-                <p className="mt-1 text-xs font-medium uppercase tracking-[0.14em] text-ink-muted">
-                  {project.discipline}
-                </p>
-                <p className="mt-2 text-sm leading-snug text-ink-muted">
-                  {project.summary}
-                </p>
+                {project.discipline && (
+                  <p className="mt-1 text-xs font-medium uppercase tracking-[0.14em] text-ink-muted">
+                    {project.discipline}
+                  </p>
+                )}
+                {project.summary && (
+                  <p className="mt-2 text-sm leading-snug text-ink-muted">
+                    {project.summary}
+                  </p>
+                )}
               </article>
             </li>
           ))}
