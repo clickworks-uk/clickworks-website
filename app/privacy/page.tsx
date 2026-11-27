@@ -9,13 +9,14 @@ export const metadata: Metadata = {
 };
 
 /*
-  Written against what this site actually does today: an enquiry form, no
-  analytics, no cookies set by us. If that changes — a pixel, an embedded
+  Written against what this site actually does today: an enquiry form, a
+  newsletter signup, no analytics, no cookies set by us. If that changes — a pixel, an embedded
   player, a newsletter — the "What we collect" and "Cookies" sections must be
   updated in the same change, and TRACKING_ENABLED flipped in lib/company.ts.
 
-  The enquiry form posts to app/api/enquiry, which emails the submission on
-  through Resend and stores nothing itself. If that route ever starts writing
+  The enquiry form and the newsletter signup post to app/api/enquiry and
+  app/api/newsletter, which email the submission on through Resend and store
+  nothing themselves. If that route ever starts writing
   to a database, a CRM or a spreadsheet, say so here in the same commit:
   "we do not keep a separate record" stops being true the moment it does.
 
@@ -41,6 +42,10 @@ export default function PrivacyPage() {
           address and the message to reply; the rest is optional.
         </p>
         <p>
+          If you sign up to the newsletter, we collect the email address you
+          give us, and nothing else.
+        </p>
+        <p>
           Our hosting provider records standard server logs for every request —
           IP address, timestamp, the page requested, and browser user agent.
           These are kept for a short period for security and to diagnose
@@ -58,6 +63,12 @@ export default function PrivacyPage() {
           available and secure. Enquiries and email correspondence rest on
           steps taken at your request before entering a contract, or on our
           legitimate interest in replying to you.
+        </p>
+        <p>
+          The newsletter rests on your consent, given by submitting the signup
+          form. You can withdraw it at any time, either through the
+          unsubscribe link on every issue or by emailing us, and we will stop
+          and delete your address.
         </p>
       </LegalSection>
 
@@ -85,6 +96,10 @@ export default function PrivacyPage() {
           correspondence, and no longer than three years after our last
           contact. We do not keep a separate record of form submissions
           anywhere else. Ask us to delete yours sooner and we will.
+        </p>
+        <p>
+          A newsletter address is kept until you unsubscribe, or until the
+          newsletter stops, whichever comes first.
         </p>
       </LegalSection>
 

@@ -1,6 +1,7 @@
 import { Instagram, Linkedin, Youtube } from "lucide-react";
 import { Container } from "@/components/Container";
 import { Wordmark } from "@/components/Wordmark";
+import { NewsletterForm } from "@/components/NewsletterForm";
 import { TikTokIcon, XIcon } from "@/components/BrandIcons";
 import { SOCIALS, SOCIAL_HANDLE, TRADING_NAME } from "@/lib/company";
 import { SERVICE_SLIDES } from "@/lib/content";
@@ -59,7 +60,7 @@ export function Footer() {
           <Wordmark alt="Clickworks home" sizes="200px" />
         </a>
 
-        <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+        <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           {COLUMNS.map((column) => (
             <nav key={column.heading} aria-label={column.heading}>
               <h2 className="text-sm font-medium text-ink-muted">
@@ -99,6 +100,8 @@ export function Footer() {
               )}
             </nav>
           ))}
+
+          <NewsletterForm />
         </div>
 
         {/*
