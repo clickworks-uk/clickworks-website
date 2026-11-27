@@ -1,5 +1,7 @@
+import Link from "next/link";
 import { Container } from "@/components/Container";
 import { Wordmark } from "@/components/Wordmark";
+import { ENQUIRY_HREF } from "@/lib/links";
 
 export function Hero() {
   return (
@@ -23,7 +25,26 @@ export function Hero() {
             <Wordmark onDark priority />
           </h1>
 
+          {/*
+            The pair wraps rather than shrinks on narrow phones: two pills
+            squeezed onto one line would leave tap targets below the 44px
+            minimum.
+          */}
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+            <Link
+              href={ENQUIRY_HREF}
+              className="inline-flex items-center justify-center rounded-full border border-transparent bg-accent px-7 py-3.5 text-base font-semibold text-white shadow-soft transition-colors hover:bg-accent-strong"
+            >
+              Get Started
+            </Link>
 
+            <Link
+              href="/about"
+              className="inline-flex items-center justify-center rounded-full border border-white/45 px-7 py-3.5 text-base font-semibold text-white transition-colors hover:border-white hover:bg-white/10"
+            >
+              Learn More
+            </Link>
+          </div>
         </Container>
       </div>
     </section>

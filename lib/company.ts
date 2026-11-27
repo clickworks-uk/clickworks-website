@@ -63,7 +63,15 @@ export const SOCIAL_HANDLE = "@getclickworks";
  */
 export const TRACKING_ENABLED = false;
 
-/** True once any field that must be shown publicly has been supplied. */
+/**
+ * True once any field that must be shown publicly has been supplied.
+ *
+ * NOTE: the footer no longer renders this block — it was removed on request.
+ * These values are still here and still correct. Before launch the block
+ * needs restoring: the Companies (Trading Disclosures) Regulations 2015
+ * require a limited company's website to show its registered name, company
+ * number, place of registration and registered office address.
+ */
 export const HAS_LEGAL_DETAILS = Boolean(
   COMPANY.legalName ||
     COMPANY.registrationNumber ||

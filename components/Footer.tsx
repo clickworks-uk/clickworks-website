@@ -2,13 +2,7 @@ import { Instagram, Linkedin, Youtube } from "lucide-react";
 import { Container } from "@/components/Container";
 import { Wordmark } from "@/components/Wordmark";
 import { TikTokIcon, XIcon } from "@/components/BrandIcons";
-import {
-  COMPANY,
-  HAS_LEGAL_DETAILS,
-  SOCIALS,
-  SOCIAL_HANDLE,
-  TRADING_NAME,
-} from "@/lib/company";
+import { SOCIALS, SOCIAL_HANDLE, TRADING_NAME } from "@/lib/company";
 import { SERVICE_SLIDES } from "@/lib/content";
 
 const COLUMNS = [
@@ -108,52 +102,15 @@ export function Footer() {
         </div>
 
         {/*
-          Statutory business identification. Each line appears only once a real
-          value is set in lib/company.ts, so nothing invented is published; an
-          empty block means the details have not been supplied yet.
+          The statutory identification line (registered name, company number,
+          place of registration, registered office) was removed on request.
+
+          It needs to come back before launch: the Companies (Trading
+          Disclosures) Regulations require a limited company's website to
+          carry those details. lib/company.ts still holds the values, so
+          restoring the block is the only work — see the git history for the
+          markup, or the note in lib/company.ts.
         */}
-        {HAS_LEGAL_DETAILS && (
-          <div className="mt-14 border-t border-line pt-8 text-sm leading-relaxed text-ink-muted">
-            <h2 className="sr-only">Company details</h2>
-            {/*
-              The parts are independent: the company number shows whether or
-              not the registered name has been filled in, rather than being
-              hidden behind it.
-            */}
-            <p>
-              {COMPANY.legalName && <>{COMPANY.legalName} &middot; </>}
-              Registered in England and Wales, company no.{" "}
-              {COMPANY.companiesHouseUrl ? (
-                <a
-                  href={COMPANY.companiesHouseUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline underline-offset-4 transition-colors hover:text-ink"
-                >
-                  {COMPANY.registrationNumber}
-                </a>
-              ) : (
-                COMPANY.registrationNumber
-              )}
-              {COMPANY.vatNumber && <> &middot; VAT {COMPANY.vatNumber}</>}
-            </p>
-            {COMPANY.registeredAddress && (
-              <address className="not-italic">
-                Registered office: {COMPANY.registeredAddress}
-              </address>
-            )}
-            {COMPANY.contactEmail && (
-              <p>
-                <a
-                  href={`mailto:${COMPANY.contactEmail}`}
-                  className="underline underline-offset-4 transition-colors hover:text-ink"
-                >
-                  {COMPANY.contactEmail}
-                </a>
-              </p>
-            )}
-          </div>
-        )}
 
         <div className="mt-16 flex flex-col items-center gap-6 text-center sm:mt-20 sm:flex-row sm:justify-between sm:text-left">
           <p className="order-2 text-sm text-ink-muted sm:order-1 sm:flex-1" />
