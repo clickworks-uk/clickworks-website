@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 
 /**
@@ -5,8 +6,31 @@ import { ArrowUpRight } from "lucide-react";
  * (0 = right, 90 = bottom) and `r` nudges each card in or out of the ring, so
  * they read as clusters rather than an even necklace. Positions resolve to
  * percentages, which makes the ring an ellipse that tracks the panel's shape.
+ *
+ * Each card can carry a photo: drop files in /public/mission and add
+ * `src: "/mission/whatever.jpg"` to the entries below. The gradient stays as
+ * the card's background, so a card with no photo — or one whose photo has not
+ * loaded — still reads as part of the ring rather than as a hole in it.
  */
-const RING = [
+type RingCard = {
+  /** Angle around the ring, in degrees. 0 = right, 90 = bottom. */
+  a: number;
+  /** Radius multiplier, nudging the card in or out of the ring. */
+  r: number;
+  /** Card width, as a percentage of the panel. */
+  w: number;
+  /** Aspect ratio, as a CSS ratio string. */
+  ar: string;
+  /** Rotation, in degrees. */
+  tilt: number;
+  /** Gradient ends, used as the card's background. */
+  from: string;
+  to: string;
+  /** Optional photo, e.g. "/mission/billboard.jpg". */
+  src?: string;
+};
+
+const RING: RingCard[] = [
   { a: 208, r: 1.02, w: 11, ar: "3/4", tilt: -14, from: "#4d2921", to: "#190d0c" },
   { a: 218, r: 0.86, w: 9, ar: "4/5", tilt: 9, from: "#213537", to: "#0e1617" },
   { a: 236, r: 1.0, w: 9, ar: "3/4", tilt: 17, from: "#16242e", to: "#090f14" },
@@ -27,7 +51,7 @@ const RING = [
   { a: 132, r: 0.93, w: 9, ar: "1/1", tilt: -16, from: "#16353b", to: "#081417" },
   { a: 152, r: 1.0, w: 9, ar: "4/5", tilt: 6, from: "#3a291f", to: "#160f0c" },
   { a: 174, r: 0.9, w: 8, ar: "3/4", tilt: -13, from: "#242932", to: "#0d0f13" },
-] as const;
+];
 
 export function MissionPanel() {
   return (
@@ -65,13 +89,28 @@ export function MissionPanel() {
                     translate/rotate that puts the card on the ring.
                   */}
                   <div
-                    className="ring-card w-full rounded-[3px] shadow-[0_8px_24px_rgba(0,0,0,0.55)] will-change-[transform,opacity] sm:rounded-[5px]"
+                    className="ring-card relative w-full overflow-hidden rounded-[3px] shadow-[0_8px_24px_rgba(0,0,0,0.55)] will-change-[transform,opacity] sm:rounded-[5px]"
                     style={{
                       aspectRatio: c.ar,
                       backgroundImage: `linear-gradient(145deg, ${c.from}, ${c.to})`,
                       animation: `card-drift ${dur}s ease-in-out ${delay}s infinite, card-breathe ${(dur * 1.35).toFixed(1)}s ease-in-out ${delay}s infinite`,
                     }}
-                  />
+                  >
+                    {c.src && (
+                      /*
+                        Knocked back so the ring stays a dark halo: at full
+                        brightness twenty photos fight the headline sitting
+                        in the middle of them.
+                      */
+                      <Image
+                        src={c.src}
+                        alt=""
+                        fill
+                        sizes="(max-width: 640px) 28vw, 12vw"
+                        className="object-cover opacity-85 saturate-[0.8] brightness-[0.78]"
+                      />
+                    )}
+                  </div>
                 </div>
               );
             })}
@@ -93,11 +132,17 @@ export function MissionPanel() {
 
           <div className="relative flex h-full flex-col items-center justify-center px-6 text-center sm:px-10">
             <h2 className="max-w-[16ch] text-balance text-2xl font-semibold leading-[1.15] tracking-tight text-white sm:text-3xl lg:text-4xl">
-              Traditional marketing is broken &amp; failing us
+              Artificial marketing is broken
             </h2>
+            {/*
+              Deliberately not anti-AI: Clickworks sells Generative Engine
+              Optimisation and has a head of AI. The argument is about
+              marketing with nobody behind it, not about the tools.
+            */}
             <p className="mt-4 max-w-[42ch] text-balance text-sm font-medium leading-snug text-white/55 sm:mt-6 sm:text-base">
-              We&rsquo;re rebuilding trust with you by making growth
-              continuous, personalised, and available 24/7.
+              Generated posts, templated campaigns, a feed nobody actually
+              wrote. We use the same tools &mdash; the difference is that
+              real people decide what is worth saying.
             </p>
             <a
               href="/about"
